@@ -1,4 +1,4 @@
-#Bezang Source Code
+Bezang Source Code
 
 This application is designed to help salespersons track sales and memorize customers and actions
 
@@ -14,19 +14,6 @@ This application is designed to help salespersons track sales and memorize custo
 
 Using this application for personal and commercial Purpose
 
-این برنامه برای کمک به فروشندگان طراحی شده است تا فروش را ردیابی کنند و مشتریان و اقدامات را به خاطر بسپارند
-
-#امکانات
-1-پیگیری فروش
-2- اضافه کردن مشتری جدید
-3- ایجاد گروه
-4-نمودار و گزارش
-5-پلتفرم کراس
-6-تقویم هجری شمسی
-7-MongoDb
-8-Nodejs
-
-استفاده از این نرم افزار برای اهداف شخصی و تجاری
 
 #Bezang-Quellcode
 
