@@ -8,7 +8,8 @@ import 'package:bestbuy/presentation/widget/rounded_input_field.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:persian_number_utility/src/extensions.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+
 
 import 'background.dart';
 

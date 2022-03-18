@@ -1,16 +1,45 @@
-# bezang
+#Bezang Source Code
 
-Best Buy Startup
+This application is designed to help salespersons track sales and memorize customers and actions
 
-## Getting Started
+#Features
+1-Sale Tracking
+2-add New customer
+3-Create Group
+4-Charts And report
+5-Cross Platform
+6-Hijri Shamsi Calender
+7-MongoDb
+8-Nodejs
 
-This project is a starting point for a Flutter application.
+Using this application for personal and commercial Purpose
 
-A few resources to get you started if this is your first Flutter project:
+این برنامه برای کمک به فروشندگان طراحی شده است تا فروش را ردیابی کنند و مشتریان و اقدامات را به خاطر بسپارند
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#امکانات
+1-پیگیری فروش
+2- اضافه کردن مشتری جدید
+3- ایجاد گروه
+4-نمودار و گزارش
+5-پلتفرم کراس
+6-تقویم هجری شمسی
+7-MongoDb
+8-Nodejs
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+استفاده از این نرم افزار برای اهداف شخصی و تجاری
+
+#Bezang-Quellcode
+
+Diese Anwendung wurde entwickelt, um Verkäufern dabei zu helfen, Verkäufe zu verfolgen und sich Kunden und Aktionen zu merken
+
+#Merkmale
+1-Verkaufsverfolgung
+2-Neuen Kunden hinzufügen
+3-Gruppe erstellen
+4-Diagramme und Bericht
+5-Cross-Plattform
+6-Hijri Shamsi Kalender
+7-MongoDb
+8-Nodejs
+
+Verwendung dieser Anwendung für persönliche und kommerzielle Zwecke
