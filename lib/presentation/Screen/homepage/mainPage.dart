@@ -1,6 +1,6 @@
 import 'package:bestbuy/Data/dataprovider/DataProviderConfig.dart';
 import 'package:bestbuy/presentation/Screen/about/about_screen.dart';
-import 'package:bestbuy/presentation/Screen/customer_add/customer_add_screen.dart';
+
 import 'package:bestbuy/presentation/Screen/introduction/introduction_screen.dart';
 import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 import 'package:bestbuy/presentation/widget/avatarNetworkUnique.dart';
@@ -18,8 +18,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:introduction_screen/introduction_screen.dart';
+
 import 'package:pushe_flutter/pushe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class MainPage extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:bestbuy/Data/model/UserRankDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'background.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
