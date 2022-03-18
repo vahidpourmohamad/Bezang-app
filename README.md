@@ -1,8 +1,34 @@
-#Bezang Source Code
+Bezang Source Code
 
 This application is designed to help salespersons track sales and memorize customers and actions
 
-#Features
+<ul>
+<ol>
+Sale Tracking
+</ol>
+<ol>
+add New customer
+</ol>
+<ol>
+Create Group
+</ol>
+<ol>
+Charts And report
+</ol>
+<ol>
+Cross Platform
+</ol>
+<ol>
+Hijri Shamsi Calender
+</ol>
+<ol>
+MongoDb
+</ol>
+<ol>
+Nodejs
+</ol>
+</ul>
+Features
 1-Sale Tracking
 2-add New customer
 3-Create Group
