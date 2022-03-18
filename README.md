@@ -1,7 +1,8 @@
-Bezang Source Code
+<h2>Bezang Source Code</h2>
 
 This application is designed to help salespersons track sales and memorize customers and actions
 
+<h2>Features</h2>
 <ul>
 <ol>
 Sale Tracking
@@ -28,31 +29,37 @@ MongoDb
 Nodejs
 </ol>
 </ul>
-Features
-1-Sale Tracking
-2-add New customer
-3-Create Group
-4-Charts And report
-5-Cross Platform
-6-Hijri Shamsi Calender
-7-MongoDb
-8-Nodejs
-
 Using this application for personal and commercial Purpose
 
-
-#Bezang-Quellcode
+<h2>Bezang-Quellcode</h2>
 
 Diese Anwendung wurde entwickelt, um Verkäufern dabei zu helfen, Verkäufe zu verfolgen und sich Kunden und Aktionen zu merken
 
-#Merkmale
-1-Verkaufsverfolgung
-2-Neuen Kunden hinzufügen
-3-Gruppe erstellen
-4-Diagramme und Bericht
-5-Cross-Plattform
-6-Hijri Shamsi Kalender
-7-MongoDb
-8-Nodejs
-
+<h2>Funktionen</h2>
+<ul>
+<ol>
+Verkaufsverfolgung
+</ol>
+<ol>
+Neukunde hinzufügen
+</ol>
+<ol>
+Gruppe erstellen
+</ol>
+<ol>
+Diagramme und Bericht
+</ol>
+<ol>
+Plattformübergreifend
+</ol>
+<ol>
+Hijri Shamsi Kalender
+</ol>
+<ol>
+MongoDb
+</ol>
+<ol>
+Nodejs
+</ol>
+</ul>
 Verwendung dieser Anwendung für persönliche und kommerzielle Zwecke
