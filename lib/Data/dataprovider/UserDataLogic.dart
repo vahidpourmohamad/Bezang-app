@@ -7,7 +7,7 @@ import 'DataProviderConfig.dart';
 
 class UserDataLogic {
   static insert(UserDataModel user) async {
-    await Dio().post('http://pouncing-denim-chip.glitch.me/userinsertone',
+    await Dio().post(nodeJsUrl+'/userinsertone',
         data: user.mapToList());
   }
 

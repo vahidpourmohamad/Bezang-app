@@ -6,7 +6,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CustomerDataLogic {
   static insert(CustomerDataModel customer) async {
-    await Dio().post('http://pouncing-denim-chip.glitch.me/customerinsertone',
+    await Dio().post(nodeJsUrl+'/customerinsertone',
         data: customer.mapToList());
   }
 
