@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "513914353742",
+    "project_id": "bezang-87491",
+    "storage_bucket": "bezang-87491.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513914353742:android:4e0e3ef8c46b091dd3ab1f",
+        "android_client_info": {
+          "package_name": "com.pourmohammad.bestbuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "513914353742-mf3tq62ib443gopo00deieeh6pp9occt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKBDEwgpvBfmtAKmCCupwPLebt1ZqCmCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "513914353742-mf3tq62ib443gopo00deieeh6pp9occt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
