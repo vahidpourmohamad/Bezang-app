@@ -5,7 +5,6 @@ import 'package:bestbuy/Data/model/CustomerDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/Screen/Customer_Call_Status_List/CustomerCallStatusListScreen.dart';
 
-
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 import 'package:bestbuy/presentation/widget/RoundedButtonwithsize.dart';
@@ -14,14 +13,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linear_datepicker/flutter_datepicker.dart';
 
 import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:shamsi_date/extensions.dart';
+import 'package:shamsi_date/shamsi_date.dart';
+//import 'package:shamsi_date/extensions.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {
   final String mobile;
   final bool userCreated;
 
-  const Body({Key? key, required this.mobile,required this.userCreated}) : super(key: key);
+  const Body({Key? key, required this.mobile, required this.userCreated})
+      : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -37,12 +38,18 @@ class _BodyState extends State<Body> {
   bool twoDays = false;
   bool calender = false;
 
-  String inProgressDate =
-      DateTime.now().add(Duration(days: 5)).toPersianDate().toEnglishDigit();
+  String inProgressDate = DateTime.now()
+      .add(Duration(days: 5))
+      .toString()
+      .substring(0, 19)
+      .toPersianDate()
+      .toEnglishDigit();
+
   bool inProgressDateShow = true;
 
   void _handleTap({required int callResultStatusP}) {
     setState(() {
+      print(callResultStatusP);
       if (callResultStatusP == 8) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("این قابلیت فعلا غیر فعال است")));
@@ -54,7 +61,20 @@ class _BodyState extends State<Body> {
         }
 
         if (callResultStatusP == 5) {
-          inProgressDate = DateTime.now().add(Duration(hours: 2)).toString();
+          inProgressDate = DateTime.now()
+              .add(Duration(hours: 2))
+              .toString()
+              .substring(0, 19)
+              .toPersianDate()
+              .toEnglishDigit();
+        }
+        if (callResultStatusP == 3) {
+          inProgressDate = DateTime.now()
+              .add(Duration(hours: 2))
+              .toString()
+              .substring(0, 19)
+              .toPersianDate()
+              .toEnglishDigit();
         }
         callResultStatus = callResultStatusP;
       }
@@ -113,9 +133,16 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print(DateTime.now().toString().substring(0, 19));
+    print(DateTime.now()
+        .add(Duration(days: 5))
+        .toString()
+        .substring(0, 19)
+        .toPersianDate()
+        .toEnglishDigit());
     return FutureBuilder<CustomerDataModel>(
         future: CustomerDataLogic.readOneCustomerByBankUserCall(
-            widget.mobile, UserLoginDetail.userId,widget.userCreated),
+            widget.mobile, UserLoginDetail.userId, widget.userCreated),
         builder: (context, AsyncSnapshot<CustomerDataModel> snapshot) {
           if (snapshot.hasData) {
             Size size = MediaQuery.of(context).size;
@@ -282,10 +309,10 @@ class _BodyState extends State<Body> {
                                 child: RoundedButtonWithSize(
                                     text: "تماس",
                                     press: () {
-                                     // ScaffoldMessenger.of(context)
-                                    //      .showSnackBar(SnackBar(
-                                    //    content: Text("test"),
-                                    //  ));
+                                      // ScaffoldMessenger.of(context)
+                                      //      .showSnackBar(SnackBar(
+                                      //    content: Text("test"),
+                                      //  ));
                                     }, // _callNumber("09151101602"),
                                     size: MediaQuery.of(context).size * 0.4))),
                         Align(
@@ -319,10 +346,10 @@ class _BodyState extends State<Body> {
                                 press: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                        return CustomerCallStatusListScreen(
-                                            mobile: snapshot.data!.telephone,name:snapshot.data!.name);
-                                      }));
-
+                                    return CustomerCallStatusListScreen(
+                                        mobile: snapshot.data!.telephone,
+                                        name: snapshot.data!.name);
+                                  }));
                                 }, // _callNumber("09151101602"),
                                 size: MediaQuery.of(context).size * 0.8))),
                     Divider(
@@ -635,6 +662,8 @@ class _BodyState extends State<Body> {
                                         onPressed: () {
                                           inProgressDate = DateTime.now()
                                               .add(Duration(days: 3))
+                                              .toString()
+                                              .substring(0, 19)
                                               .toPersianDate()
                                               .toEnglishDigit();
                                           tomorrow = false;
@@ -674,6 +703,8 @@ class _BodyState extends State<Body> {
                                         onPressed: () {
                                           inProgressDate = DateTime.now()
                                               .add(Duration(days: 2))
+                                              .toString()
+                                              .substring(0, 19)
                                               .toPersianDate()
                                               .toEnglishDigit();
                                           tomorrow = false;
@@ -713,6 +744,8 @@ class _BodyState extends State<Body> {
                                         onPressed: () {
                                           inProgressDate = DateTime.now()
                                               .add(Duration(days: 1))
+                                              .toString()
+                                              .substring(0, 19)
                                               .toPersianDate()
                                               .toEnglishDigit();
                                           tomorrow = true;
@@ -797,7 +830,8 @@ class _BodyState extends State<Body> {
                               hashTags: textHashTagsController.text);
                           print(snapshot.data!.name);
                           CallDataLogic.insert(cm);
-                          Navigator.pushNamedAndRemoveUntil(context, '/',(Route<dynamic> route) => false);
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/', (Route<dynamic> route) => false);
 //                          Navigator.pushReplacement(
 //                            context,
 //                            MaterialPageRoute(

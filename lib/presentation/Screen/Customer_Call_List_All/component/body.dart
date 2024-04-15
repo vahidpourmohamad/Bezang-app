@@ -14,7 +14,7 @@ import 'package:flutter_linear_datepicker/flutter_datepicker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'background.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-import 'package:shamsi_date/extensions.dart';
+//import 'package:shamsi_date/extensions.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final textNameController = TextEditingController();
   final dropDownStatusController = TextEditingController();
-  final textHashTagsController =TextEditingController();
+  final textHashTagsController = TextEditingController();
   String toDate = "1402/1/1";
   String fromDate = "1400/1/1";
 
@@ -139,7 +139,9 @@ class _BodyState extends State<Body> {
         toDateG.toDateTime().toString(),
         mobile,
         name,
-        "0",textHashTagsController.value.text,UserLoginDetail.userId);
+        "0",
+        textHashTagsController.value.text,
+        UserLoginDetail.userId);
     return temp;
   }
 
@@ -334,7 +336,7 @@ class _BodyState extends State<Body> {
                                     child: RoundedInputField(
                                       wordSpace: 4,
                                       hintText:
-                                      "#خریدار#220متر#بیمه_عمر#پرینتر و یا هر چیز دیگری   برای این مخاطب اولین هشتگ را بنویسید",
+                                          "#خریدار#220متر#بیمه_عمر#پرینتر و یا هر چیز دیگری   برای این مخاطب اولین هشتگ را بنویسید",
                                       onChanged: (value) {},
                                       maxLine: 1,
                                       controller: textHashTagsController,
@@ -382,7 +384,6 @@ class _BodyState extends State<Body> {
                   switch (snapshot.data![index].status) {
                     case "1":
                       {
-
                         badgeColor = Colors.green;
                         description = "فروش موفق انجام شد";
                       }
@@ -450,9 +451,10 @@ class _BodyState extends State<Body> {
                       press: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return CustomerCallStatusListScreen(
-                                  mobile: snapshot.data![index].customerMobile,name:snapshot.data![index].customerName);
-                            }));
+                          return CustomerCallStatusListScreen(
+                              mobile: snapshot.data![index].customerMobile,
+                              name: snapshot.data![index].customerName);
+                        }));
                       },
                       backgroundColor: Colors.white,
                       descriptionColor: Colors.black,

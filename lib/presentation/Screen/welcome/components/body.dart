@@ -13,7 +13,6 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import 'background.dart';
 
 class Body extends StatelessWidget {
-
   const Body({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -50,39 +49,59 @@ class Body extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             GestureDetector(
-                child: Text("متن قانون حریم خصوصی", style: TextStyle(decoration: TextDecoration.underline, color: Colors.blue)),
-                onTap: () {   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PrivacyScreen();
-                    },
-                  ),
-                );
-                }
-            ),
+                child: Text("متن قانون حریم خصوصی",
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Colors.blue)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return PrivacyScreen();
+                      },
+                    ),
+                  );
+                }),
             RoundedButton(
               text: "تایید متن حریم خصوصی و ارسال کد تایید",
               color: kPrimaryColor,
               textColor: Colors.white,
               press: () async {
                 //////
-                String temp=txtMobilecontroller.text.toEnglishDigit();
+                String temp = txtMobilecontroller.text.toEnglishDigit();
 
-                if(temp.isNumeric()==true) {
+                if (temp.isNumeric() == true) {
                   Random _rnd = Random();
                   int _code = _rnd.nextInt(88888) + 11111;
                   UserLoginDetail.code = _code.toString();
                   Dio().options.contentType = Headers.jsonContentType;
-                  await Dio()
-                      .get('https://raygansms.com/SendMessageWithCode.ashx',
-                      queryParameters: {
-                        'UserName': "09151101602",
-                        'Password': "3607412",
-                        'Mobile': temp,
-                        'Message': "کد ثبت نام نرم افزار بزنگ : " +
-                            UserLoginDetail.code
-                      });
+                  Dio().options.headers['Access-Control-Allow-Origin'] = '*';
+                  Dio().options.headers['Access-Control-Allow-Credentials'] =
+                      true;
+                  Dio().options.headers['Access-Control-Allow-Headers'] =
+                      'Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale';
+                  Dio().options.headers['Access-Control-Allow-Methods'] =
+                      'POST, OPTIONS';
+                  try {
+                    await Dio().get(
+                        'https://raygansms.com/SendMessageWithCode.ashx',
+                        queryParameters: {
+                          'UserName': "09151101602",
+                          'Password': "121233",
+                          'Mobile': temp,
+                          'Message': "کد ثبت نام نرم افزار بزنگ : " +
+                              UserLoginDetail.code
+                        });
+                  } on DioException catch (e) {
+                    if (e.response != null) {
+                      print(e.response);
+                    } else {
+                      // Something happened in setting up or sending the request that triggered an Error
+                      print(e.requestOptions);
+                      print(e.message);
+                    }
+                  }
 
                   //////
                   Navigator.pushReplacement(
@@ -93,12 +112,10 @@ class Body extends StatelessWidget {
                       },
                     ),
                   );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("فقط عدد وارد کنید")));
                 }
-                else
-                  {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("فقط عدد وارد کنید")));
-                  }
               },
             ),
           ],

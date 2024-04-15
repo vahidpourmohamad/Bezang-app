@@ -15,7 +15,7 @@ import 'background.dart';
 
 class Body extends StatelessWidget {
   bool _pinTrue = false;
-  bool _onTheProgress= false;
+  bool _onTheProgress = false;
   final String mobile;
 
   Body({Key? key, required this.mobile}) : super(key: key);
@@ -56,9 +56,9 @@ class Body extends StatelessWidget {
               },
               onCompleted: (pin) {
                 pin = pin.toEnglishDigit();
-              //  print("Completed: " + UserLoginDetail.code);
-               // ScaffoldMessenger.of(context)
-              //      .showSnackBar(SnackBar(content: Text(pin)));
+                //  print("Completed: " + UserLoginDetail.code);
+                // ScaffoldMessenger.of(context)
+                //      .showSnackBar(SnackBar(content: Text(pin)));
                 if (pin == UserLoginDetail.code) {
                   _pinTrue = true;
                 } else {
@@ -70,17 +70,17 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "ورود",
               press: () async {
-                if(_onTheProgress ==false) {
+                if (_onTheProgress == false) {
                   _onTheProgress = true;
 
                   if (_pinTrue == true) {
                     UserLoginDetail.mobile = mobile;
                     UserDataModel user =
-                    await UserDataLogic.readOneUserByMobile(mobile);
+                        await UserDataLogic.readOneUserByMobile(mobile);
                     if (user.id != "-1") {
-                      Pushe.sendEvent("User reLogin");
+                      //Pushe.sendEvent("User reLogin");
                       SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
+                          await SharedPreferences.getInstance();
                       prefs.setBool("introduction", true);
                       prefs.setString("mobile", UserLoginDetail.mobile);
                       prefs.setString("userName", user.name);
@@ -96,7 +96,8 @@ class Body extends StatelessWidget {
                       UserLoginDetail.paymentStatus = user.paymentStatus;
 
 //613f356ac9ff54f03c48eb58
-                      Navigator.pushNamedAndRemoveUntil(context, '/',(Route<dynamic> route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (Route<dynamic> route) => false);
                     } else {
                       Navigator.push(
                         context,
@@ -111,7 +112,7 @@ class Body extends StatelessWidget {
                     ScaffoldMessenger.of(context)
                         .showSnackBar(SnackBar(content: Text("کد اشتباه است")));
                   }
-                  _onTheProgress=false;
+                  _onTheProgress = false;
                 }
               },
             ),

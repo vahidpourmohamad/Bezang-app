@@ -21,8 +21,8 @@ import 'package:flutter/services.dart';
 
 import 'package:pushe_flutter/pushe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class MainPage extends StatefulWidget {
 
+class MainPage extends StatefulWidget {
   MainPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
@@ -43,17 +43,16 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     //_pageController = PageController();
-    if(UserLoginDetail.introduction==false)
-      {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return IntroductionScreenWidget();
-            },
-          ),
-        );
-      }
+    if (UserLoginDetail.introduction == false) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return IntroductionScreenWidget();
+          },
+        ),
+      );
+    }
   }
 
   @override
@@ -143,40 +142,38 @@ class _MainPageState extends State<MainPage> {
 
   versionCheck(BuildContext context) async {
 //    Dio().options.contentType = Headers.jsonContentType;
-    var response =
-        await Dio().get(nodeJsUrl + '/version');
+    var response = await Dio().get(nodeJsUrl + '/version');
     print(response.data.runtimeType);
     print(response.data);
     print(UserLoginDetail.version);
-    if(response.data!=UserLoginDetail.version)
-      {
+    if (response.data != UserLoginDetail.version) {
       showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: Text('لطفا برنامه خود را بروزرسانی کنید',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: 'iransans',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                content:
-                    RoundedButton(text:"خروج از برنامه",press: (){SystemChannels.platform.invokeMethod('SystemNavigator.pop');})
-              ));
-        }
+          context: context,
+          builder: (_) => AlertDialog(
+              title: Text('لطفا برنامه خود را بروزرسانی کنید',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'iransans',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
+              content: RoundedButton(
+                  text: "خروج از برنامه",
+                  press: () {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  })));
+    }
 
-  //  UserDataModel user=UserDataModel.fromList(response.data,0);
-
+    //  UserDataModel user=UserDataModel.fromList(response.data,0);
   }
+
   news(BuildContext context) async {
 //    Dio().options.contentType = Headers.jsonContentType;
-    var response =
-    await Dio().get(nodeJsUrl + '/news');
+    var response = await Dio().get(nodeJsUrl + '/news');
     print(response.data.runtimeType);
     print(response.data);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String temp =prefs.getString("news")??"";
-    if(response.data!="" && temp!=response.data)
-    {
+    String temp = prefs.getString("news") ?? "";
+    if (response.data != "" && temp != response.data) {
       showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -186,28 +183,26 @@ class _MainPageState extends State<MainPage> {
                       fontFamily: 'iransans',
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
-              content:
-              RoundedButton(text:"باشه",press: () async {
-                prefs.setString("news",response.data );
-                Navigator.pop(context);})
-          ));
+              content: RoundedButton(
+                  text: "باشه",
+                  press: () async {
+                    prefs.setString("news", response.data);
+                    Navigator.pop(context);
+                  })));
     }
 
     //  UserDataModel user=UserDataModel.fromList(response.data,0);
-
   }
+
   @override
   Widget build(BuildContext context) {
     Setting.mediaSize = MediaQuery.of(context).size;
     versionCheck(context);
     news(context);
-print(UserLoginDetail.paymentStatus);
+    print(UserLoginDetail.paymentStatus);
     return Scaffold(
-
       key: _key,
-      body:
-      SafeArea(
-
+      body: SafeArea(
           child: Stack(fit: StackFit.expand, children: <Widget>[
         SingleChildScrollView(
           child: Container(
@@ -241,7 +236,7 @@ print(UserLoginDetail.paymentStatus);
                       setState(() => _currentIndex = index);
                     },
                     children: <Widget>[
-                     // UserLoginDetail.paymentStatus?
+                      // UserLoginDetail.paymentStatus?
                       NewCall(
                         title: "Bezang",
                       ),
@@ -304,7 +299,8 @@ print(UserLoginDetail.paymentStatus);
         UserAccountsDrawerHeader(
             accountName: Text(UserLoginDetail.userName),
             accountEmail: Text(UserLoginDetail.mobile),
-            currentAccountPicture:    AvatarNetworkUnique(userName: UserLoginDetail.userId),
+            currentAccountPicture:
+                AvatarNetworkUnique(userName: UserLoginDetail.userId),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/accountback.jpg"),
@@ -349,12 +345,12 @@ print(UserLoginDetail.paymentStatus);
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setBool("introduction", false);
             UserLoginDetail.introduction = false;
-            UserLoginDetail.userName ="";// textNameController.text;
+            UserLoginDetail.userName = ""; // textNameController.text;
             prefs.setString("mobile", "");
-            prefs.setString("userName","" );
+            prefs.setString("userName", "");
             prefs.setString("version", "");
-            prefs.setString("profilePhoto","");
-            prefs.setString("userId","");
+            prefs.setString("profilePhoto", "");
+            prefs.setString("userId", "");
             Pushe.sendEvent("User_Log_Out");
             ////////
             Navigator.pushReplacement(
@@ -370,7 +366,9 @@ print(UserLoginDetail.paymentStatus);
         ListTile(
           title: Text('خروج از برنامه'),
           leading: Icon(Icons.exit_to_app),
-          onTap: () {SystemChannels.platform.invokeMethod('SystemNavigator.pop');},
+          onTap: () {
+            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          },
         ),
         ListTile(
           title: Text(UserLoginDetail.version),

@@ -6,9 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-
 class IntroductionScreenWidget extends StatefulWidget {
-
   @override
   _IntroductionScreen createState() => _IntroductionScreen();
   const IntroductionScreenWidget({Key? key}) : super(key: key);
@@ -18,10 +16,7 @@ class _IntroductionScreen extends State<IntroductionScreenWidget> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   Future<void> _onIntroEnd(context) async {
-
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => WelcomeScreen()),
-    );
+    Navigator.push(context, MaterialPageRoute(builder: (_) => WelcomeScreen()));
   }
 
 //  Widget _buildFullScreenImage() {
@@ -45,18 +40,17 @@ class _IntroductionScreen extends State<IntroductionScreenWidget> {
     const pageDecoration = const PageDecoration(
       titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
       bodyTextStyle: bodyStyle,
-      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      //descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.white,
       imagePadding: EdgeInsets.zero,
-
     );
 
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Colors.white,
       globalFooter: SizedBox(
-        width: MediaQuery.of(context).size.width*0.8,
-        height: MediaQuery.of(context).size.height*0.1,
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.height * 0.1,
         child: RoundedButton(
           text: 'بزن بریم',
           press: () {
@@ -71,7 +65,6 @@ class _IntroductionScreen extends State<IntroductionScreenWidget> {
           image: _buildImage('assets/images/img1.jpg'),
           decoration: pageDecoration,
         ),
-
         PageViewModel(
           title: "کار گروهی",
           body: "تیم خودت رو بساز و با تیمت پیشرفت کن",
@@ -88,12 +81,12 @@ class _IntroductionScreen extends State<IntroductionScreenWidget> {
       onDone: () => _onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: false,
-      skipFlex: 0,
+      //skipFlex: 0,
       nextFlex: 0,
       // Display as right-to-left
       rtl: true,
       skip: const Text('رد شدن'),
-      next: const Icon(Icons.arrow_forward,color:LightColor.kPrimaryColor),
+      next: const Icon(Icons.arrow_forward, color: LightColor.kPrimaryColor),
       done: const Text('تمام',
           style: TextStyle(
               color: LightColor.kPrimaryColor, fontWeight: FontWeight.w600)),
@@ -111,7 +104,7 @@ class _IntroductionScreen extends State<IntroductionScreenWidget> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      skipColor: Colors.black,
+      //skipColor: Colors.black,
       dotsContainerDecorator: const ShapeDecoration(
         color: LightColor.kPrimaryLightColor,
         shape: RoundedRectangleBorder(

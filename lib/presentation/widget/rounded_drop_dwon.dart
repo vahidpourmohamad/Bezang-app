@@ -43,20 +43,21 @@ class RoundedDropDown extends StatelessWidget {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: DropdownSearch<String>(
-                  mode: Mode.BOTTOM_SHEET,
+                  // mode: Mode.BOTTOM_SHEET,
                   // showSelectedItem: true,
                   items: dValues,
-                  showSearchBox: true,
-                  showClearButton: true,
-                  popupItemDisabled: (String s) => s.startsWith('I'),
+                  // showSearchBox: true,
+                  // showClearButton: true,
+                  // popupItemDisabled: (String s) => s.startsWith('I'),
                   onChanged: onChanged,
-                  dropdownSearchDecoration: InputDecoration(
 
-                    hintText: "انتخاب کنید",
-                    labelText: hintText,
-                    contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
-                    border: OutlineInputBorder(),
-                  ) ,
+                  // dropdownSearchDecoration: InputDecoration(
+
+                  //   hintText: "انتخاب کنید",
+                  //   labelText: hintText,
+                  //   contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                  //   border: OutlineInputBorder(),
+                  // ) ,
                 ),
 //            DropdownButtonFormField<String>(
 //              value: dValues[0],
