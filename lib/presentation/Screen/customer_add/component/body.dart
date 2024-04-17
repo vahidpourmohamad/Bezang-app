@@ -1,4 +1,5 @@
 import 'package:bestbuy/Data/dataprovider/CustomerDataLogic.dart';
+import 'package:bestbuy/Data/dataprovider/DataProviderConfig.dart';
 import 'package:bestbuy/Data/model/CustomerDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/Screen/Customer_Call/CustomerCallScreen.dart';
@@ -10,14 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-
 import 'background.dart';
 
 class Body extends StatelessWidget {
   Future<List<dynamic>> getJob() async {
     try {
-      var response =
-          await Dio().get('http://pouncing-denim-chip.glitch.me/getjob');
+      var response = await Dio().get(nodeJsUrl + '/getjob');
 
       List<dynamic> jsonmap = response.data; //jsonDecode();
       // = jsonDecode(response.data);
@@ -99,7 +98,10 @@ class Body extends StatelessWidget {
                       icon: Icons.build_sharp,
                       controller: textJobController,
                       dValues: job,
-                      size: Size(MediaQuery.of(context).size.width*0.8,MediaQuery.of(context).size.height*0.07),//snapshot.data!.cast<String>(),
+                      size: Size(
+                          MediaQuery.of(context).size.width * 0.8,
+                          MediaQuery.of(context).size.height *
+                              0.07), //snapshot.data!.cast<String>(),
                     ),
 
                     RoundedInputField(
@@ -122,7 +124,8 @@ class Body extends StatelessWidget {
                             id: "0",
                             name: textNameController.text,
                             company: textBusinessController.text,
-                            telephone: textMobileController.text.toEnglishDigit(),
+                            telephone:
+                                textMobileController.text.toEnglishDigit(),
                             creationDate: DateTime.now(),
                             enable: true,
                             bank: UserLoginDetail.userId,
@@ -131,13 +134,14 @@ class Body extends StatelessWidget {
                             comment: textDescriptionController.text,
                             enableComment: "Enable By Default");
                         CustomerDataLogic.insert(customer);
-                       // Navigator.pop(context);
-                         Navigator.push(
-                           context,
-                           MaterialPageRoute(
-                           builder: (context) {
-                               return CustomerCallScreen(mobile: textMobileController.text,userCreated:  true);
-
+                        // Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CustomerCallScreen(
+                                  mobile: textMobileController.text,
+                                  userCreated: true);
                             },
                           ),
                         );

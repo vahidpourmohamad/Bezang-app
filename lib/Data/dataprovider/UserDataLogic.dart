@@ -121,6 +121,13 @@ class UserDataLogic {
     return (response.data);
   }
 
+  static deleteManager(String Id) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    var response = await Dio()
+        .post(nodeJsUrl + '/manageridtonullbyuserid', data: {'id': Id});
+    print(response.data.runtimeType);
+    return (response.data);
+  }
 //  static deleteById(int id) async {
 //    var db = await Db.create(dataSourceUriMongodb);
 //    await db.open();

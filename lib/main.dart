@@ -43,6 +43,7 @@ class _BezangApp extends State<BezangApp> {
     UserLoginDetail.userId = (prefs.getString('userId') ?? "");
     UserLoginDetail.mobile = (prefs.getString('mobile') ?? "");
     UserLoginDetail.userName = (prefs.getString('userName') ?? "");
+
     //UserLoginDetail.version = (prefs.getString('version') ?? "");
     UserLoginDetail.introduction = (prefs.getBool("introduction") ?? false);
     UserLoginDetail.profilePhoto = (prefs.getString('profilePhoto') ?? "");

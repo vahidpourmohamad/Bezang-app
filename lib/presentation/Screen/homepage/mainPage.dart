@@ -1,4 +1,5 @@
 import 'package:bestbuy/Data/dataprovider/DataProviderConfig.dart';
+import 'package:bestbuy/presentation/Screen/Setting/settingscreen.dart';
 import 'package:bestbuy/presentation/Screen/about/about_screen.dart';
 
 import 'package:bestbuy/presentation/Screen/introduction/introduction_screen.dart';
@@ -330,6 +331,20 @@ class _MainPageState extends State<MainPage> {
               MaterialPageRoute(
                 builder: (context) {
                   return AboutScreen();
+                },
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: Text('تنظیمات'),
+          leading: Icon(Icons.settings),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return SettingScreen();
                 },
               ),
             );

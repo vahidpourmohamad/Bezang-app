@@ -3,6 +3,7 @@ import 'package:bestbuy/Data/dataprovider/CustomerDataLogic.dart';
 import 'package:bestbuy/Data/model/CallDataModel.dart';
 import 'package:bestbuy/Data/model/CustomerDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
+import 'package:bestbuy/presentation/Screen/CDR_Status_List/CDRStatusListScreen.dart';
 import 'package:bestbuy/presentation/Screen/Customer_Call_Status_List/CustomerCallStatusListScreen.dart';
 
 import 'package:bestbuy/presentation/themes/light_color.dart';
@@ -309,11 +310,8 @@ class _BodyState extends State<Body> {
                                 child: RoundedButtonWithSize(
                                     text: "تماس",
                                     press: () {
-                                      // ScaffoldMessenger.of(context)
-                                      //      .showSnackBar(SnackBar(
-                                      //    content: Text("test"),
-                                      //  ));
-                                    }, // _callNumber("09151101602"),
+                                      // _callNumber("09151101602");
+                                    },
                                     size: MediaQuery.of(context).size * 0.4))),
                         Align(
                             alignment: Alignment.centerRight,
@@ -342,11 +340,33 @@ class _BodyState extends State<Body> {
                                 vertical: 1, horizontal: 1),
                             child: RoundedButtonWithSize(
                                 color: Colors.lightGreen,
-                                text: " نمایش سابقه تماسها با مشتری",
+                                text: "نمایش سابقه پیگیری مشتری",
                                 press: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return CustomerCallStatusListScreen(
+                                        mobile: snapshot.data!.telephone,
+                                        name: snapshot.data!.name);
+                                  }));
+                                }, // _callNumber("09151101602"),
+                                size: MediaQuery.of(context).size * 0.8))),
+                    Divider(
+                      color: Color(0xffeeeeee),
+                      height: 15,
+                      thickness: 1,
+                    ),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 1, horizontal: 1),
+                            child: RoundedButtonWithSize(
+                                color: Colors.red,
+                                text: " نمایش سابقه تماسها با مشتری",
+                                press: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return CDRStatusListScreen(
                                         mobile: snapshot.data!.telephone,
                                         name: snapshot.data!.name);
                                   }));

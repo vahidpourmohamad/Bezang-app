@@ -1,3 +1,4 @@
+import 'package:bestbuy/Data/model/CDRDataModel.dart';
 import 'package:bestbuy/Data/model/CallDataModel.dart';
 
 import 'package:dio/dio.dart';
@@ -24,13 +25,28 @@ class CallDataLogic {
     return (response.data);
   }
 
+  static Future<List<CDRDataModel>> readCDRByMobileByUserId(
+      String _mobile, String id) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    print(_mobile);
+    var response = await Dio().post(nodeJsUrl + '/findcdrbydestination',
+        data: {'destination': _mobile});
+
+    List<CDRDataModel> tempList = [];
+    for (dynamic item in response.data) {
+      tempList.add(CDRDataModel.fromMap(item));
+    }
+    return (tempList);
+  }
+
   static Future<List<CallDataModel>> findCallBySetting(
       String dateFrom,
       String dateTo,
       String mobile,
       String name,
       String status,
-      String hashTags,String userId) async {
+      String hashTags,
+      String userId) async {
     Dio().options.contentType = Headers.jsonContentType;
     var response = await Dio().post(nodeJsUrl + '/findcallbysetting', data: {
       'name': name,
@@ -39,7 +55,7 @@ class CallDataLogic {
       'datefrom': dateFrom,
       'dateto': dateTo,
       'hashTags': hashTags,
-      'userId':userId
+      'userId': userId
     });
     print(response.data.runtimeType);
     List<CallDataModel> tempList = [];

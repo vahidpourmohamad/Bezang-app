@@ -8,4 +8,6 @@ class UserLoginDetail {
   static bool isloaded = false;
   static String profilePhoto = "";
   static bool paymentStatus = false;
+  static String internal = "";
+  static String APICode = "";
 }

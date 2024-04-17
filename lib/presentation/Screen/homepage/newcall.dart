@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bestbuy/Data/dataprovider/DataProviderConfig.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/Screen/Customer_Call/CustomerCallScreen.dart';
 import 'package:bestbuy/presentation/Screen/Customer_Call_List/component/background.dart';
@@ -46,8 +47,7 @@ class _NewCall extends State<NewCall> {
 //      );
 //    }
     try {
-      var response =
-          await Dio().get('http://pouncing-denim-chip.glitch.me/getbanks');
+      var response = await Dio().get(nodeJsUrl + '/getbanks');
 
       List<dynamic> jsonMap = response.data; //jsonDecode();
       // = jsonDecode(response.data);

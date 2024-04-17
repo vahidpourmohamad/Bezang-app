@@ -44,6 +44,11 @@ class UserRankDataModel {
   late String inProgressCount;
 
   late String newCustomerMonth;
+  late String averageSec;
+  late String totalSec;
+  late String callCount;
+  late String minCallTime;
+  late String maxCallTime;
 
   UserRankDataModel(
       this.callMonth,
@@ -67,34 +72,41 @@ class UserRankDataModel {
       this.statusMonth8,
       this.statusMonth9,
       this.inProgressCount,
-      this.newCustomerMonth);
+      this.newCustomerMonth,
+      this.averageSec,
+      this.callCount,
+      this.totalSec,
+      this.maxCallTime,
+      this.minCallTime);
 
-  UserRankDataModel.stringToModel(String data
-     ){
-    var temp= [];
-    temp= data.split("*");
-    this.callMonth=temp[0];
-    this.callDay=temp[1];
-    this.statusDay1=temp[2];
-    this.statusDay2=temp[3];
-    this.statusDay3=temp[4];
-    this.statusDay4=temp[5];
-    this.statusDay5=temp[6];
-    this.statusDay6=temp[7];
-    this.statusDay7=temp[8];
-    this.statusDay8=temp[9];
-    this.statusDay9=temp[10];
-    this.statusMonth1=temp[11];
-    this.statusMonth2=temp[12];
-    this.statusMonth3=temp[13];
-    this.statusMonth4=temp[14];
-    this.statusMonth5=temp[15];
-    this.statusMonth6=temp[16];
-    this.statusMonth7=temp[17];
-    this.statusMonth8=temp[18];
-    this.statusMonth9=temp[19];
-    this.inProgressCount=temp[20];
-    this.newCustomerMonth=temp[21];
+  UserRankDataModel.stringToModel(String data) {
+    var temp = [];
+    temp = data.split("*");
+    this.callMonth = temp[0];
+    this.callDay = temp[1];
+    this.statusDay1 = temp[2];
+    this.statusDay2 = temp[3];
+    this.statusDay3 = temp[4];
+    this.statusDay4 = temp[5];
+    this.statusDay5 = temp[6];
+    this.statusDay6 = temp[7];
+    this.statusDay7 = temp[8];
+    this.statusDay8 = temp[9];
+    this.statusDay9 = temp[10];
+    this.statusMonth1 = temp[11];
+    this.statusMonth2 = temp[12];
+    this.statusMonth3 = temp[13];
+    this.statusMonth4 = temp[14];
+    this.statusMonth5 = temp[15];
+    this.statusMonth6 = temp[16];
+    this.statusMonth7 = temp[17];
+    this.statusMonth8 = temp[18];
+    this.statusMonth9 = temp[19];
+    this.inProgressCount = temp[20];
+    this.newCustomerMonth = temp[21];
+    this.averageSec = temp[22];
+    this.totalSec = temp[23];
+    this.callCount = temp[24];
   }
 //https://www.pornhub.com/view_video.php?viewkey=ph613b3d0deb0ef
 //  Map<String, dynamic> mapToList() {

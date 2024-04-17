@@ -3,6 +3,7 @@ import 'package:bestbuy/Data/dataprovider/UserRanksDataLogic.dart';
 import 'package:bestbuy/Data/model/UserRankDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/themes/light_color.dart';
+import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -19,7 +20,7 @@ class LinearCallCount {
   LinearCallCount(this.count, this.status, this.statusName);
 }
 
- class Body extends StatefulWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
   @override
@@ -31,13 +32,16 @@ class _BodyState extends State<Body> {
   final dropDownStatusController = TextEditingController();
 
   Future<UserRankDataModel> loadingData() async {
-   // UserDataModel temp;
-   // String t;
-    UserRankDataModel ud = await UserRankDataLogic.readUserReport(UserLoginDetail.userId);
+    // UserDataModel temp;
+    // String t;
+    UserRankDataModel ud =
+        await UserRankDataLogic.readUserReport(UserLoginDetail.userId);
     //UserRankDataModel ud = UserRankDataModel.stringToModel(t);
     return ud;
   }
-  static List<LinearCallCount> _createMonthSampleData(UserRankDataModel userRank) {
+
+  static List<LinearCallCount> _createMonthSampleData(
+      UserRankDataModel userRank) {
     final data = [
       new LinearCallCount(1, int.parse(userRank.statusMonth1), "موفق"),
       new LinearCallCount(2, int.parse(userRank.statusMonth2), "کنسل"),
@@ -46,6 +50,7 @@ class _BodyState extends State<Body> {
 
     return data;
   }
+
   static List<LinearCallCount> _createSampleData(UserRankDataModel userRank) {
     final data = [
       new LinearCallCount(1, int.parse(userRank.statusDay1), "موفق"),
@@ -74,7 +79,8 @@ class _BodyState extends State<Body> {
             return Background(
                 child: Directionality(
                     textDirection: TextDirection.rtl,
-                    child: Column(children: [
+                    child: SingleChildScrollView(
+                        child: Column(children: [
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
@@ -104,7 +110,7 @@ class _BodyState extends State<Body> {
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: MediaQuery.of(context).size.height * 0.05,
-                              bottom: 7.0,
+                              bottom: 4.0,
                             ),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -131,13 +137,13 @@ class _BodyState extends State<Body> {
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: MediaQuery.of(context).size.height * 0.05,
-                              bottom: 7.0,
+                              bottom: 4.0,
                             ),
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "تعداد تماس امروز",
+                                    "تعداد پیگیری امروز",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
@@ -153,6 +159,175 @@ class _BodyState extends State<Body> {
                                   ),
                                 ]),
                           )),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.05,
+                              bottom: 7.0,
+                            ),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.005,
+                                            bottom: 1,
+                                          ),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text("تعداد تماس خروجی",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                                Text(
+                                                    snapshot.data!.callCount
+                                                        .toPersianDigit(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.amber,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                              ]))),
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.005,
+                                            bottom: 1,
+                                          ),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text("میانگین تماس ",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                                Text(
+                                                    snapshot.data!.averageSec
+                                                        .toPersianDigit(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.blue,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                              ]))),
+                                ]),
+                          )),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.005,
+                              bottom: 1,
+                            ),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.005,
+                                            bottom: 1,
+                                          ),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text("مجموع زمان مکالمات",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                                Text(
+                                                    snapshot.data!.totalSec
+                                                        .toPersianDigit(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        color: Colors.pink,
+                                                        fontFamily:
+                                                            'iransans')),
+                                              ]))),
+                                  Align(
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                          padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.02,
+                                            bottom: 1,
+                                          ),
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text("بیشترین",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                                Text(
+                                                    snapshot.data!.maxCallTime
+                                                        .toPersianDigit(),
+                                                    style: TextStyle(
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            'iransans')),
+                                              ]))),
+                                ]),
+                          )),
+
+                      RoundedButton(
+                        text: "نمایش پیگری ها",
+                        color: Colors.pink,
+                        press: () {
+//
+                        },
+                      ),
+                      RoundedButton(
+                        color: Colors.deepOrange,
+                        text: "نمایش تماس های امروز",
+                        press: () {
+//
+                        },
+                      ),
                       SfCircularChart(
                           series: <PieSeries<LinearCallCount, String>>[
                             PieSeries<LinearCallCount, String>(
@@ -170,7 +345,7 @@ class _BodyState extends State<Body> {
                                     DataLabelSettings(isVisible: true))
                           ]),
 //
-                    ])));
+                    ]))));
           } else {
             if (snapshot.hasError) {
               print("ERROR  " + snapshot.error.toString());
