@@ -24,7 +24,16 @@ class LinearCallCount {
 }
 
 class Body extends StatefulWidget {
-  const Body({Key? key}) : super(key: key);
+  final bool managerPermit;
+  final String id;
+  final String name;
+
+  const Body(
+      {Key? key,
+      required this.managerPermit,
+      required this.id,
+      required this.name})
+      : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -37,8 +46,7 @@ class _BodyState extends State<Body> {
   Future<UserRankDataModel> loadingData() async {
     // UserDataModel temp;
     // String t;
-    UserRankDataModel ud =
-        await UserRankDataLogic.readUserReport(UserLoginDetail.userId);
+    UserRankDataModel ud = await UserRankDataLogic.readUserReport(widget.id);
     //UserRankDataModel ud = UserRankDataModel.stringToModel(t);
     return ud;
   }
@@ -116,7 +124,7 @@ class _BodyState extends State<Body> {
                               bottom: 4.0,
                             ),
                             child: Text(
-                              UserLoginDetail.userName,
+                              widget.name,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 36,
@@ -135,7 +143,7 @@ class _BodyState extends State<Body> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "امتیاز شما",
+                                    "امتیاز ",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,

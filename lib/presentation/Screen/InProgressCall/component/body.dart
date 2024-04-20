@@ -1,11 +1,10 @@
 import 'package:bestbuy/Data/dataprovider/CallDataLogic.dart';
-import 'package:bestbuy/Data/model/CDRDataModel.dart';
-
+import 'package:bestbuy/Data/model/CallDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/config/setting.dart';
-
+import 'package:bestbuy/presentation/Screen/Customer_Call/CustomerCallScreen.dart';
 import 'package:bestbuy/presentation/themes/light_color.dart';
-import 'package:bestbuy/presentation/widget/CDRHistoryStatusCard.dart';
+import 'package:bestbuy/presentation/widget/CallHistoryStatusCard.dart';
 
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -13,11 +12,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {
-  final String mobile;
   final String name;
 
-  const Body({Key? key, required this.mobile, required this.name})
-      : super(key: key);
+  const Body({Key? key, required this.name}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -45,10 +42,11 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<CDRDataModel>>(
-        future: CallDataLogic.readCDRByMobile(
-            widget.mobile, UserLoginDetail.userId),
-        builder: (context, AsyncSnapshot<List<CDRDataModel>> snapshot) {
+    return FutureBuilder<List<CallDataModel>>(
+        future: CallDataLogic.readEnabledInProgressCallsByUser(
+            UserLoginDetail.userId,
+            DateTime.utc(2030, 1, 1, 0, 0, 0).toString()),
+        builder: (context, AsyncSnapshot<List<CallDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;
             return Background(
@@ -102,6 +100,13 @@ class _BodyState extends State<Body> {
                                             fontSize: 14,
                                             fontFamily: 'iransans'),
                                       ),
+//                              Text(
+//                                "مشتریان شما",
+//                                style: TextStyle(
+//                                    fontWeight: FontWeight.bold,
+//                                    fontSize: 16,
+//                                    fontFamily: 'iransans'),
+//                              ),
                                     ]))),
                       ))),
               Expanded(
@@ -119,24 +124,84 @@ class _BodyState extends State<Body> {
                       color: Colors.grey,
                     ),
                     itemBuilder: (context, index) {
-                      Color cl = Colors.green;
-                      String description = "مدت زمان :" +
-                          snapshot.data![index].duration.toString() +
-                          " ثانبه";
-
-                      return CDRHistoryStatusCard(
-                          comment: "",
+                      Color cl = Colors.black;
+                      String description = "";
+                      switch (snapshot.data![index].status) {
+                        case "1":
+                          {
+                            cl = Colors.green;
+                            description = "فروش موفق انجام شد";
+                          }
+                          break;
+                        case "2":
+                          {
+                            cl = Colors.red;
+                            description = "کنسل شد";
+                          }
+                          break;
+                        case "3":
+                          {
+                            cl = Colors.pink;
+                            description = "در حال پیگیری";
+                          }
+                          break;
+                        case "4":
+                          {
+                            cl = Colors.yellow;
+                            description = "ارسال محتوا انجام شد";
+                          }
+                          break;
+                        case "5":
+                          {
+                            cl = Colors.deepOrangeAccent;
+                            description = "مشتری پاسخ گو تماس نبود";
+                          }
+                          break;
+                        case "6":
+                          {
+                            cl = Colors.cyan;
+                            description = "ارسال نمونه انجام شد";
+                          }
+                          break;
+                        case "7":
+                          {
+                            cl = Colors.lightGreen;
+                            description = "قرار ملاقات تنظیم شد";
+                          }
+                          break;
+                        case "8":
+                          {
+                            cl = Colors.deepPurple;
+                            description = "مشتری به فرد دیگری انتقال شد";
+                          }
+                          break;
+                        case "9":
+                          {
+                            cl = Colors.blue;
+                            description = snapshot.data![index].comment;
+                          }
+                          break;
+                      }
+                      return CustomerHistoryStatusCard(
+                          comment: snapshot.data![index].comment,
                           prefixBadge: cl,
                           suffixBadge: cl,
-                          date: snapshot.data![index].callDate
+                          date: snapshot.data![index].setDateTime
                               .toPersianDateStr(showDayStr: true),
                           iconColor: Colors.transparent,
-                          title: "تماس خروجی موفق",
+                          title: snapshot.data![index].customerName,
                           description: description,
-                          mobile: snapshot.data![index].destination
+                          mobile: snapshot.data![index].customerMobile
                               .toPersianDigit(),
                           suffixIconColor: Colors.transparent,
-                          press: () {},
+                          press: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return CustomerCallScreen(
+                                  mobile: snapshot.data![index].customerMobile,
+                                  userCreated: false);
+                            }));
+                          },
                           backgroundColor: Colors.white,
                           descriptionColor: Colors.black,
                           titleColor: Colors.black);

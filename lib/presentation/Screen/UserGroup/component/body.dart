@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/UserDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
+import 'package:bestbuy/presentation/Screen/User_Rating%20_group/UserRatingGroupScreen.dart';
+import 'package:bestbuy/presentation/Screen/User_Rating/UserRatingScreen.dart';
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/UsersCard.dart';
 import 'package:flutter/material.dart';
@@ -138,12 +140,23 @@ class _BodyState extends State<Body> {
                         iconColor: Colors.transparent,
                         title: snapshot.data![index].name,
                         suffixIconColor: Colors.transparent,
-                        press: () {},
+                        press: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return UserRatingGroupScreen(
+                              name: snapshot.data![index].name,
+                              id: UserLoginDetail.userName,
+                              managerPermit: true,
+                            );
+                          }));
+                        },
+//},
                         backgroundColor: Colors.white,
                         descriptionColor: Colors.black,
+
                         titleColor: Colors.black,
-                        profileImage:
-                        "https://api.multiavatar.com/"+snapshot.data![index].profilePhoto,
+                        profileImage: "https://api.multiavatar.com/" +
+                            snapshot.data![index].profilePhoto,
                       );
                     },
                   ),

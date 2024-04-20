@@ -2,6 +2,7 @@ import 'package:bestbuy/Data/model/CDRDataModel.dart';
 import 'package:bestbuy/Data/model/CallDataModel.dart';
 
 import 'package:dio/dio.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'DataProviderConfig.dart';
 
 class CallDataLogic {
@@ -25,12 +26,34 @@ class CallDataLogic {
     return (response.data);
   }
 
-  static Future<List<CDRDataModel>> readCDRByMobileByUserId(
+  static Future<List<CDRDataModel>> readCDRByMobile(
       String _mobile, String id) async {
     Dio().options.contentType = Headers.jsonContentType;
     print(_mobile);
     var response = await Dio().post(nodeJsUrl + '/findcdrbydestination',
         data: {'destination': _mobile});
+
+    List<CDRDataModel> tempList = [];
+    for (dynamic item in response.data) {
+      tempList.add(CDRDataModel.fromMap(item));
+    }
+    return (tempList);
+  }
+
+  static Future<List<CDRDataModel>> readCDRByInternalByDay(
+      DateTime reportDay, String internal) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    print(internal);
+    internal = "103";
+    DateTime n = reportDay;
+    DateTime fd = DateTime(n.year, n.month, n.day, 0, 0, 0);
+    DateTime td = DateTime(n.year, n.month, n.day, 23, 59, 59);
+    var response = await Dio().post(nodeJsUrl + '/findcdrbydatebyorigin',
+        data: {
+          'origin': internal,
+          'datefrom': fd.toString(),
+          'dateto': td.toString()
+        });
 
     List<CDRDataModel> tempList = [];
     for (dynamic item in response.data) {
@@ -89,6 +112,32 @@ class CallDataLogic {
         data: {'userId': userId, 'mobile': mobile});
     print(userId);
     print(mobile);
+    List<CallDataModel> tempList = [];
+    for (dynamic item in response.data) {
+      print(item);
+      tempList.add(CallDataModel.fromMap(item));
+    }
+    print(tempList.runtimeType);
+    return (tempList);
+  }
+
+  static Future<List<CallDataModel>> readActivityByUserByDate(
+      String userId, DateTime reportDay) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    print("findactivitybyuserbydate");
+    DateTime Now = reportDay;
+    DateTime fromDate = DateTime(Now.year, Now.month, Now.day, 0, 0, 0);
+    DateTime toDate = DateTime(Now.year, Now.month, Now.day, 23, 59, 59);
+    print(fromDate);
+    print(toDate);
+    var response = await Dio().post(nodeJsUrl + '/findactivitybyuserbydate',
+        data: {
+          'userId': userId,
+          'fromDate': fromDate.toString(),
+          'toDate': toDate.toString()
+        });
+    print(userId);
+
     List<CallDataModel> tempList = [];
     for (dynamic item in response.data) {
       print(item);

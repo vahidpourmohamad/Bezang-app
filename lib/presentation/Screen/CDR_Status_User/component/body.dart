@@ -3,9 +3,11 @@ import 'package:bestbuy/Data/model/CDRDataModel.dart';
 
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/config/setting.dart';
+import 'package:bestbuy/presentation/Screen/CDR_Status_User/CDRStatusUserScreen.dart';
 
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/CDRHistoryStatusCard.dart';
+import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -13,10 +15,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'background.dart';
 
 class Body extends StatefulWidget {
-  final String mobile;
+  final DateTime reportDay;
   final String name;
 
-  const Body({Key? key, required this.mobile, required this.name})
+  const Body({Key? key, required this.reportDay, required this.name})
       : super(key: key);
 
   @override
@@ -46,8 +48,8 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<CDRDataModel>>(
-        future: CallDataLogic.readCDRByMobile(
-            widget.mobile, UserLoginDetail.userId),
+        future: CallDataLogic.readCDRByInternalByDay(
+            widget.reportDay, UserLoginDetail.internal),
         builder: (context, AsyncSnapshot<List<CDRDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;
@@ -82,26 +84,70 @@ class _BodyState extends State<Body> {
                                     bottom: 0,
                                     left: 10,
                                     right: 20),
-                                child: Row(
+                                child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        widget.name,
-                                        // Jalali.now().year.toString()+"/"+Jalali.now().month.toString()+"/"+Jalali.now().day.toString()+"امروز ",
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            fontFamily: 'iransans'),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              widget.reportDay.toPersianDate(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  fontFamily: 'iransans'),
+                                            ),
+                                            Text(
+                                              widget.name,
+                                              // Jalali.now().year.toString()+"/"+Jalali.now().month.toString()+"/"+Jalali.now().day.toString()+"امروز ",
+                                              style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                  fontFamily: 'iransans'),
+                                            )
+                                          ]),
+                                      RoundedButton(
+                                        text: "روز بعد",
+                                        press: () {
+                                          final now = widget.reportDay;
+
+                                          final tomorrow = DateTime(
+                                              now.year, now.month, now.day + 1);
+
+                                          Navigator.pushReplacement(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return CDRStatusUserScreen(
+                                              name: UserLoginDetail.userName,
+                                              reportDay: tomorrow,
+                                            );
+                                          }));
+                                        },
+                                        color: Colors.blue,
                                       ),
-                                      Text(
-                                        "مخاطب",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            fontFamily: 'iransans'),
-                                      ),
+                                      RoundedButton(
+                                          color: Colors.red,
+                                          text: "روز قبل",
+                                          press: () {
+                                            final now = widget.reportDay;
+
+                                            final tomorrow = DateTime(now.year,
+                                                now.month, now.day - 1);
+
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return CDRStatusUserScreen(
+                                                name: UserLoginDetail.userName,
+                                                reportDay: tomorrow,
+                                              );
+                                            }));
+                                          }),
                                     ]))),
                       ))),
               Expanded(

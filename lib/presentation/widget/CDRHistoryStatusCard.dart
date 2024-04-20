@@ -76,8 +76,8 @@ class CDRHistoryStatusCard extends StatelessWidget {
                                     child: Text(
                                       this.mobile,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w100,
-                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0,
                                           color: this.descriptionColor),
                                     ),
                                   ),
