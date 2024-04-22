@@ -1,4 +1,4 @@
-package com.example.bezangapp
+package com.Azhang.bezang
 
 import io.flutter.embedding.android.FlutterActivity
 

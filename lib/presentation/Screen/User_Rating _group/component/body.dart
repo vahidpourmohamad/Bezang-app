@@ -345,12 +345,14 @@ class _BodyState extends State<Body> {
                         text: "نمایش پیگری ها",
                         color: Colors.pink,
                         press: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return InProgressCallScreen(
-                              name: UserLoginDetail.userName,
-                            );
-                          }));
+                          if (widget.managerPermit == true) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return InProgressCallScreen(
+                                name: UserLoginDetail.userName,
+                              );
+                            }));
+                          } else {}
 //
                         },
                       ),
@@ -358,26 +360,30 @@ class _BodyState extends State<Body> {
                         color: Colors.deepOrange,
                         text: "نمایش تماس های امروز",
                         press: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return CDRStatusUserScreen(
-                              name: UserLoginDetail.userName,
-                              reportDay: DateTime.now(),
-                            );
-                          }));
+                          if (widget.managerPermit == true) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return CDRStatusUserScreen(
+                                name: UserLoginDetail.userName,
+                                reportDay: DateTime.now(),
+                              );
+                            }));
+                          } else {}
                         },
                       ),
                       RoundedButton(
                         color: Colors.blueGrey,
                         text: "نمایش رویداد های امروز",
                         press: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return TodayActionsListScreen(
-                              name: UserLoginDetail.userName,
-                              ReportDay: DateTime.now(),
-                            );
-                          }));
+                          if (widget.managerPermit == true) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return TodayActionsListScreen(
+                                name: UserLoginDetail.userName,
+                                ReportDay: DateTime.now(),
+                              );
+                            }));
+                          } else {}
                         },
                       ),
                       SfCircularChart(

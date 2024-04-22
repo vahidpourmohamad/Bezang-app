@@ -141,12 +141,17 @@ class _BodyState extends State<Body> {
                         title: snapshot.data![index].name,
                         suffixIconColor: Colors.transparent,
                         press: () {
+                          bool managerPermit = false;
+                          if (snapshot.data![index].mangerId ==
+                              UserLoginDetail.userId) {
+                            managerPermit = true;
+                          }
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return UserRatingGroupScreen(
                               name: snapshot.data![index].name,
                               id: UserLoginDetail.userName,
-                              managerPermit: true,
+                              managerPermit: managerPermit,
                             );
                           }));
                         },
