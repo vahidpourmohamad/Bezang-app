@@ -2,9 +2,13 @@ import 'dart:math';
 import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/UserDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
+
+import 'package:bestbuy/presentation/Screen/UserGroupManagment/UserGroupManagmentScreen.dart';
 import 'package:bestbuy/presentation/Screen/User_Rating%20_group/UserRatingGroupScreen.dart';
-import 'package:bestbuy/presentation/Screen/User_Rating/UserRatingScreen.dart';
+
 import 'package:bestbuy/presentation/themes/light_color.dart';
+
+import 'package:bestbuy/presentation/widget/RoundedButtonwithsize.dart';
 import 'package:bestbuy/presentation/widget/UsersCard.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -19,6 +23,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool managment = false;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   String managerName = "";
@@ -68,6 +73,9 @@ class _BodyState extends State<Body> {
         future: UserDataLogic.readUsersGroupByUserId(UserLoginDetail.userId),
         builder: (context, AsyncSnapshot<List<UserDataModel>> snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty || managment) {
+              return (UserGroupManagmentScreen());
+            }
             //Size size = MediaQuery.of(context).size;
 
             return Background(
@@ -97,18 +105,24 @@ class _BodyState extends State<Body> {
                                 managerName,
                                 // Jalali.now().year.toString()+"/"+Jalali.now().month.toString()+"/"+Jalali.now().day.toString()+"امروز ",
                                 style: TextStyle(
-                                    color: Colors.green,
+                                    color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                     fontFamily: 'iransans'),
                               ),
-                              Text(
-                                "گروه کاری شما",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    fontFamily: 'iransans'),
-                              ),
+                              RoundedButtonWithSize(
+                                  text: "مدیریت گروه",
+                                  size: Size(200, 10),
+                                  color: Colors.green,
+                                  press: () async {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return UserGroupManagmentScreen();
+                                      },
+                                    ));
+                                    managment = true;
+                                  }),
+
 //                              Text(
 //                                "مشتریان شما",
 //                                style: TextStyle(

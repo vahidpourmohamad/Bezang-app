@@ -1,6 +1,8 @@
 import 'package:bestbuy/Data/model/UserDataModel.dart';
+import 'package:bestbuy/config/ClsLoginCnf.dart';
 
 import 'package:dio/dio.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import 'DataProviderConfig.dart';
 
 class UserDataLogic {
@@ -33,6 +35,12 @@ class UserDataLogic {
     return (response.data);
   }
 
+  static Future<void> removeUserFromGroup(String Id) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    var response = await Dio()
+        .post(nodeJsUrl + '/manageridtonullbyuserid', data: {'_id': Id});
+  }
+
   static Future<List<UserDataModel>> readUsersGroupByUserId(String id) async {
     Dio().options.contentType = Headers.jsonContentType;
     var response =
@@ -41,7 +49,7 @@ class UserDataLogic {
     print(response.data.runtimeType);
     UserDataModel user = UserDataModel.fromList(response.data, 0);
     List<dynamic> usersInGroup = [];
-    if (user.mangerId != "") {
+    if (user.mangerId != "" && user.mangerId != "0") {
       usersInGroup = await readUsersGroupByManagerId(user.mangerId);
     }
     print(usersInGroup);
@@ -121,12 +129,47 @@ class UserDataLogic {
     return (response.data);
   }
 
+  static Future<String> addToGroup(String Mobile, String ManagerId) async {
+    UserDataModel user = await readOneUserByMobile(Mobile);
+    print("mobile :" + Mobile);
+    print("managerId: " + ManagerId);
+    if (user.mangerId == "" || user.mangerId == "0") {
+      Dio().options.contentType = Headers.jsonContentType;
+
+      var response = await Dio().post(nodeJsUrl + '/addusertogroupbymobile',
+          data: {'mobile': Mobile.toEnglishDigit(), 'managerid': ManagerId});
+      print("mobile :" + Mobile);
+      print("managerId: " + ManagerId);
+      Dio().post(nodeJsUrl + '/addusertogroupbymobile',
+          data: {'mobile': UserLoginDetail.mobile, 'managerid': ManagerId});
+      print(response.data.runtimeType);
+      return ("کاربر به گروه اضافه شد");
+    } else {
+      return ("این کاربر در حال حاظر در یک گروه می باشد");
+    }
+  }
+
   static deleteManager(String Id) async {
     Dio().options.contentType = Headers.jsonContentType;
     var response = await Dio()
         .post(nodeJsUrl + '/manageridtonullbyuserid', data: {'id': Id});
     print(response.data.runtimeType);
     return (response.data);
+  }
+
+  static Future<String> deleteManagerMobile(
+      String Mobile, String ManagerId) async {
+    UserDataModel user = await readOneUserByMobile(Mobile);
+
+    if (user.mangerId == ManagerId) {
+      Dio().options.contentType = Headers.jsonContentType;
+      var response = await Dio().post(nodeJsUrl + '/manageridtonullbymobile',
+          data: {'mobile': Mobile});
+      print(response.data.runtimeType);
+      return ("از گروه شما حذف شد");
+    } else {
+      return ("این کاربر در گروه شما عضو نیست");
+    }
   }
 //  static deleteById(int id) async {
 //    var db = await Db.create(dataSourceUriMongodb);

@@ -1,5 +1,3 @@
-
-
 import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/UserDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
@@ -27,6 +25,7 @@ class Body extends StatefulWidget {
 }
 
 class _Body extends State<Body> {
+      bool? _character= true;
   loadSetting(String username) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("introduction", true);
@@ -43,7 +42,7 @@ class _Body extends State<Body> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDataModel user = await UserDataLogic.readOneUserByName(username);
     prefs.setString("userId", user.id);
-    print( user.id);
+    print(user.id);
     UserLoginDetail.userId = user.id;
   }
 
@@ -54,7 +53,7 @@ class _Body extends State<Body> {
     final textFamilyController = TextEditingController();
     final textTelController = TextEditingController();
     final textAddressController = TextEditingController();
-    bool? _character = true;
+
 
     return Background(
       child: SingleChildScrollView(
@@ -86,7 +85,7 @@ class _Body extends State<Body> {
                     leading: Radio<bool>(
                         value: true,
                         groupValue: _character,
-                        onChanged: (bool? value) {
+                        onChanged: (value) {
                           setState(() {
                             _character = value;
                           });
@@ -102,7 +101,7 @@ class _Body extends State<Body> {
                     leading: Radio<bool>(
                         value: false,
                         groupValue: _character,
-                        onChanged: (bool? value) {
+                        onChanged: (value) {
                           setState(() {
                             _character = value;
                           });
@@ -142,7 +141,7 @@ class _Body extends State<Body> {
                 UserLoginDetail.userName = textNameController.text;
                 //prefs.setString("version", UserLoginDetail.version);
                 UserLoginDetail.profilePhoto = textNameController.text;
-                UserLoginDetail.paymentStatus=false;
+                UserLoginDetail.paymentStatus = false;
                 /////
                 UserDataModel user = UserDataModel(
                     id: "",
@@ -152,7 +151,7 @@ class _Body extends State<Body> {
                     creationDate: DateTime.now(),
                     enable: true,
                     mangerId: "",
-                    paymentStatus:false,
+                    paymentStatus: false,
                     applicationVersion: UserLoginDetail.version,
                     gender: _character ?? true,
                     age: 25,
@@ -204,5 +203,4 @@ class _Body extends State<Body> {
       ),
     );
   }
-
 }
