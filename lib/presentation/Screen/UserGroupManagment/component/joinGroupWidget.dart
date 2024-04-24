@@ -40,6 +40,7 @@ class _JoinGroupWidgetState extends State<JoinGroupWidget> {
                 child: Text(
                   "شما هیچ گروهی ندارید جهت تشکیل گروه لطفا شماره همراه یکی از اعضا را وارد کنید",
                   // Jalali.now().year.toString()+"/"+Jalali.now().month.toString()+"/"+Jalali.now().day.toString()+"امروز ",
+
                   style: TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
