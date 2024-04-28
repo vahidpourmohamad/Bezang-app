@@ -17,8 +17,10 @@ import 'background.dart';
 class Body extends StatefulWidget {
   final DateTime ReportDay;
   final String name;
+  final String id;
 
-  const Body({Key? key, required this.ReportDay, required this.name})
+  const Body(
+      {Key? key, required this.ReportDay, required this.name, required this.id})
       : super(key: key);
 
   @override
@@ -48,8 +50,8 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<CallDataModel>>(
-        future: CallDataLogic.readActivityByUserByDate(
-            UserLoginDetail.userId, widget.ReportDay),
+        future:
+            CallDataLogic.readActivityByUserByDate(widget.id, widget.ReportDay),
         builder: (context, AsyncSnapshot<List<CallDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;
@@ -130,8 +132,9 @@ class _BodyState extends State<Body> {
                                             MaterialPageRoute(
                                                 builder: (context) {
                                           return TodayActionsListScreen(
-                                            name: UserLoginDetail.userName,
+                                            name: widget.name,
                                             ReportDay: tomorrow,
+                                            id: widget.id,
                                           );
                                         }));
                                       },
@@ -143,16 +146,16 @@ class _BodyState extends State<Body> {
                                         press: () {
                                           final now = widget.ReportDay;
 
-                                          final tomorrow = DateTime(
+                                          final yesterday = DateTime(
                                               now.year, now.month, now.day - 1);
 
                                           Navigator.pushReplacement(context,
                                               MaterialPageRoute(
                                                   builder: (context) {
                                             return TodayActionsListScreen(
-                                              name: UserLoginDetail.userName,
-                                              ReportDay: tomorrow,
-                                            );
+                                                name: widget.name,
+                                                ReportDay: yesterday,
+                                                id: widget.id);
                                           }));
                                         }),
 //                              Text(

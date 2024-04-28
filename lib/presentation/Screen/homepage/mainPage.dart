@@ -1,4 +1,6 @@
 import 'package:bestbuy/Data/dataprovider/DataProviderConfig.dart';
+import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
+import 'package:bestbuy/Data/model/UserDataModel.dart';
 import 'package:bestbuy/presentation/Screen/Setting/settingscreen.dart';
 import 'package:bestbuy/presentation/Screen/about/about_screen.dart';
 
@@ -144,6 +146,11 @@ class _MainPageState extends State<MainPage> {
   versionCheck(BuildContext context) async {
 //    Dio().options.contentType = Headers.jsonContentType;
     var response = await Dio().get(nodeJsUrl + '/version');
+
+    UserDataModel Ut =
+        await UserDataLogic.readOneUserById(UserLoginDetail.userId);
+    UserLoginDetail.internal = Ut.age.toString();
+
     print(response.data.runtimeType);
     print(response.data);
     print(UserLoginDetail.version);
@@ -201,6 +208,7 @@ class _MainPageState extends State<MainPage> {
     versionCheck(context);
     news(context);
     print(UserLoginDetail.paymentStatus);
+
     return Scaffold(
       key: _key,
       body: SafeArea(

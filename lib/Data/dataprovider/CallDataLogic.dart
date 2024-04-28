@@ -1,5 +1,8 @@
+import 'package:bestbuy/Data/dataprovider/CustomerDataLogic.dart';
+import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/CDRDataModel.dart';
 import 'package:bestbuy/Data/model/CallDataModel.dart';
+import 'package:bestbuy/Data/model/CustomerDataModel.dart';
 
 import 'package:dio/dio.dart';
 import 'package:shamsi_date/shamsi_date.dart';
@@ -44,7 +47,7 @@ class CallDataLogic {
       DateTime reportDay, String internal) async {
     Dio().options.contentType = Headers.jsonContentType;
     print(internal);
-    internal = "103";
+
     DateTime n = reportDay;
     DateTime fd = DateTime(n.year, n.month, n.day, 0, 0, 0);
     DateTime td = DateTime(n.year, n.month, n.day, 23, 59, 59);
@@ -57,7 +60,17 @@ class CallDataLogic {
 
     List<CDRDataModel> tempList = [];
     for (dynamic item in response.data) {
-      tempList.add(CDRDataModel.fromMap(item));
+      CDRDataModel temp = CDRDataModel.fromMap(item);
+      // var tempuser = await CustomerDataLogic.readOneCustomerByMobileToModel(
+      //     temp.destination);
+
+      // if (tempuser.name != "") {
+      //   temp.uniqueid = tempuser.name + " " + tempuser.company;
+      // } else {
+      //   temp.uniqueid = "";
+      // }
+
+      tempList.add(temp);
     }
     return (tempList);
   }

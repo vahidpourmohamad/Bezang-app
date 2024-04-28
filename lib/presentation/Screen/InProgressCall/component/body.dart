@@ -13,8 +13,10 @@ import 'background.dart';
 
 class Body extends StatefulWidget {
   final String name;
+  final String id;
 
-  const Body({Key? key, required this.name}) : super(key: key);
+  const Body({Key? key, required this.name, required this.id})
+      : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -44,8 +46,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<CallDataModel>>(
         future: CallDataLogic.readEnabledInProgressCallsByUser(
-            UserLoginDetail.userId,
-            DateTime.utc(2030, 1, 1, 0, 0, 0).toString()),
+            widget.id, DateTime.utc(2030, 1, 1, 0, 0, 0).toString()),
         builder: (context, AsyncSnapshot<List<CallDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;

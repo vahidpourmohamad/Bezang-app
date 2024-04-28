@@ -6,13 +6,14 @@ import 'component/body.dart';
 class TodayActionsListScreen extends StatelessWidget {
   final DateTime ReportDay;
   final String name;
+  final String id;
   const TodayActionsListScreen(
-      {Key? key, required this.ReportDay, required this.name})
+      {Key? key, required this.ReportDay, required this.name, required this.id})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(name: name, ReportDay: ReportDay),
+      body: Body(name: name, ReportDay: ReportDay, id: id),
     );
   }
 }

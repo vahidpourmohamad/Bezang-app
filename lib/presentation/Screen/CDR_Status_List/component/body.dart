@@ -6,8 +6,10 @@ import 'package:bestbuy/config/setting.dart';
 
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/CDRHistoryStatusCard.dart';
+import 'package:dio/dio.dart';
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'background.dart';
@@ -42,6 +44,8 @@ class _BodyState extends State<Body> {
     setState(() {});
     _refreshController.loadComplete();
   }
+
+  void palySound() {}
 
   @override
   Widget build(BuildContext context) {
@@ -131,16 +135,25 @@ class _BodyState extends State<Body> {
                           date: snapshot.data![index].callDate
                               .toPersianDateStr(showDayStr: true),
                           iconColor: Colors.transparent,
-                          title: "تماس خروجی موفق",
+                          title: "تماس خروجی",
                           description: description,
                           mobile: snapshot.data![index].destination
                               .toPersianDigit(),
                           suffixIconColor: Colors.transparent,
-                          press: () {},
+                          press: () async {
+                            print("cdr Touch");
+                            final dio = Dio();
+// var pathToSave= "/WHERE YOU WANTED TO BE"
+                            var response = await dio.download(
+                                "http://192.168.1.100/index.php?menu=monitoring&action=download&id=1714216409.3950&namefile=OUT405-20240427-154329-1714216409.3950.wav&rawmode=yes",
+                                (await getTemporaryDirectory()).path +
+                                    snapshot.data![index].voice);
+                            print(response);
+                          },
                           backgroundColor: Colors.white,
                           descriptionColor: Colors.black,
                           titleColor: Colors.black);
-                    },
+                    }, //http://192.168.1.100/index.php?menu=monitoring&action=download&id=1714216409.3950&namefile=OUT405-20240427-154329-1714216409.3950.wav&rawmode=yes
                   ),
                 ),
                 // The ListView

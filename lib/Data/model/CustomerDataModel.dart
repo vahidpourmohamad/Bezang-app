@@ -1,6 +1,5 @@
 import 'dart:core';
 
-
 class CustomerDataModel {
   late String id;
   late String name;
@@ -58,32 +57,49 @@ class CustomerDataModel {
   }
 
   CustomerDataModel.fromMap(Map<String, dynamic> mapObject) {
-    this.id = mapObject["_id"]??"";
-    this.name = mapObject["name"]??"";
-    this.company = mapObject["company"]??"";
-    this.telephone = mapObject["telephone"]??"";
-    this.comment = mapObject["comment"]??"";
-    this.workgroup = mapObject["workgroup"]??"";
-    this.bank = mapObject["bank"]??"";
+    this.id = mapObject["_id"] ?? "";
+    this.name = mapObject["name"] ?? "";
+    this.company = mapObject["company"] ?? "";
+    this.telephone = mapObject["telephone"] ?? "";
+    this.comment = mapObject["comment"] ?? "";
+    this.workgroup = mapObject["workgroup"] ?? "";
+    this.bank = mapObject["bank"] ?? "";
     //this.creationUserList = mapObject[index]["creationUserList"].cast<String>();
-    this.creationUserList = new List<String>.from(mapObject["creationUserList"]);
-    this.enableComment = mapObject["enableComment"]??"";
-    this.creationDate =DateTime.tryParse(mapObject["creationDate"])!;
-    this.enable = mapObject["enable"]??"";
+    this.creationUserList =
+        new List<String>.from(mapObject["creationUserList"]);
+    this.enableComment = mapObject["enableComment"] ?? "";
+    this.creationDate = DateTime.tryParse(mapObject["creationDate"])!;
+    this.enable = mapObject["enable"] ?? "";
   }
 
   CustomerDataModel.fromList(List<dynamic> mapObject, int index) {
-    this.id = mapObject[index]["_id"];
-    this.name = mapObject[index]["name"];
-    this.company = mapObject[index]["company"];
-    this.telephone = mapObject[index]["telephone"];
-    this.comment = mapObject[index]["comment"];
-    this.workgroup = mapObject[index]["workgroup"];
-    this.bank = mapObject[index]["bank"];
-    //this.creationUserList = mapObject[index]["creationUserList"].cast<String>();
-    this.creationUserList = new List<String>.from(mapObject[index]["creationUserList"]);
-    this.enableComment = mapObject[index]["enableComment"];
-    this.creationDate =DateTime.tryParse(mapObject[index]["creationDate"])!;
-    this.enable = mapObject[index]["enable"];
-  }//samindavoodiz
+    if (mapObject.isNotEmpty) {
+      this.id = mapObject[index]["_id"];
+      this.name = mapObject[index]["name"];
+      this.company = mapObject[index]["company"];
+      this.telephone = mapObject[index]["telephone"];
+      this.comment = mapObject[index]["comment"];
+      this.workgroup = mapObject[index]["workgroup"];
+      this.bank = mapObject[index]["bank"];
+      //this.creationUserList = mapObject[index]["creationUserList"].cast<String>();
+      this.creationUserList =
+          new List<String>.from(mapObject[index]["creationUserList"]);
+      this.enableComment = mapObject[index]["enableComment"];
+      this.creationDate = DateTime.tryParse(mapObject[index]["creationDate"])!;
+      this.enable = mapObject[index]["enable"];
+    } else {
+      this.id = "-1";
+      this.name = "";
+      this.company = "";
+      this.telephone = "";
+      this.comment = "";
+      this.workgroup = "";
+      this.bank = "";
+      //this.creationUserList = mapObject[index]["creationUserList"].cast<String>();
+      this.creationUserList = [];
+      this.enableComment = "";
+      this.creationDate = DateTime.now();
+      this.enable = true;
+    }
+  } //samindavoodiz
 }

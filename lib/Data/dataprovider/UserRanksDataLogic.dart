@@ -1,4 +1,6 @@
+import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/CDRDataModel.dart';
+import 'package:bestbuy/Data/model/UserDataModel.dart';
 import 'package:bestbuy/Data/model/UserRankDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:dio/dio.dart';
@@ -9,6 +11,7 @@ import 'DataProviderConfig.dart';
 class UserRankDataLogic {
   static Future<UserRankDataModel> readUserReport(String id) async {
     Dio().options.contentType = Headers.jsonContentType;
+    UserDataModel userTemp = await UserDataLogic.readOneUserById(id);
     UserRankDataModel userRankModel = UserRankDataModel(
         "0",
         "0",
@@ -48,8 +51,7 @@ class UserRankDataLogic {
     response = await Dio()
         .post(nodeJsUrl + '/countprogessscalls', data: {'userId': id});
     userRankModel.statusDay3 = response.data;
-    int _callDay = int.parse(userRankModel.statusDay1) * 200 -
-        int.parse(userRankModel.statusDay2) * 2 +
+    int _callDay = int.parse(userRankModel.statusDay1) * 200 +
         int.parse(userRankModel.statusDay3);
     userRankModel.callDay = _callDay.toString();
 
@@ -95,14 +97,16 @@ class UserRankDataLogic {
     response = await Dio().post(nodeJsUrl + '/findcdrbydatebyorigin', data: {
       'datefrom': fd.toString(),
       'dateto': td.toString(),
-      "origin": UserLoginDetail.internal
+      "origin": userTemp.age.toString()
     });
 
     int max = 0, min = 100000, count = 0, total = 0;
     List<CDRDataModel> tempList = [];
+    total = 0;
     for (dynamic item in response.data) {
       print(item);
       CDRDataModel tempItem = CDRDataModel.fromMap(item);
+
       tempList.add(tempItem);
       count = count + 1;
       total += tempItem.duration;

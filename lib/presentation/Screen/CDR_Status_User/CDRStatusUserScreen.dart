@@ -6,13 +6,17 @@ import 'component/body.dart';
 class CDRStatusUserScreen extends StatelessWidget {
   final DateTime reportDay;
   final String name;
+  final String internal;
   const CDRStatusUserScreen(
-      {Key? key, required this.reportDay, required this.name})
+      {Key? key,
+      required this.reportDay,
+      required this.name,
+      required this.internal})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(name: name, reportDay: reportDay),
+      body: Body(name: name, reportDay: reportDay, internal: internal),
     );
   }
 }

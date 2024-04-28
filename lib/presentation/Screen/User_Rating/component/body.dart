@@ -8,6 +8,7 @@ import 'package:bestbuy/presentation/Screen/TodayActions/TodayActionsListScreen.
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'background.dart';
@@ -58,13 +59,13 @@ class _BodyState extends State<Body> {
     final data = [
       new LinearCallCount(1, int.parse(userRank.statusDay1), "موفق"),
       new LinearCallCount(2, int.parse(userRank.statusDay2), "کنسل"),
-      new LinearCallCount(3, int.parse(userRank.statusDay3), "در حال پیگیری"),
       new LinearCallCount(4, int.parse(userRank.statusDay4), "محتوا"),
       new LinearCallCount(5, int.parse(userRank.statusDay5), "جواب نداد"),
       new LinearCallCount(6, int.parse(userRank.statusDay6), "ارسال نمونه"),
       new LinearCallCount(7, int.parse(userRank.statusDay7), "جلسه"),
-      new LinearCallCount(8, int.parse(userRank.statusDay8), "اانتقال"),
-      new LinearCallCount(9, int.parse(userRank.statusDay9), "دیگر"),
+      new LinearCallCount(8, int.parse(userRank.statusDay8), "انتقال"),
+      new LinearCallCount(3, int.parse(userRank.statusDay3), "در حال پیگیری"),
+      new LinearCallCount(15, int.parse(userRank.statusDay9), "دیگر"),
     ];
 
     return data;
@@ -340,8 +341,8 @@ class _BodyState extends State<Body> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return InProgressCallScreen(
-                              name: UserLoginDetail.userName,
-                            );
+                                name: UserLoginDetail.userName,
+                                id: UserLoginDetail.userId);
                           }));
 //
                         },
@@ -355,6 +356,7 @@ class _BodyState extends State<Body> {
                             return CDRStatusUserScreen(
                               name: UserLoginDetail.userName,
                               reportDay: DateTime.now(),
+                              internal: UserLoginDetail.internal,
                             );
                           }));
                         },
@@ -368,6 +370,7 @@ class _BodyState extends State<Body> {
                             return TodayActionsListScreen(
                               name: UserLoginDetail.userName,
                               ReportDay: DateTime.now(),
+                              id: UserLoginDetail.userId,
                             );
                           }));
                         },
@@ -379,6 +382,23 @@ class _BodyState extends State<Body> {
                                 explodeIndex: 0,
                                 // Bind data source
                                 dataSource: _createSampleData(snapshot.data!),
+                                xValueMapper: (LinearCallCount data, _) =>
+                                    data.count.toString(),
+                                yValueMapper: (LinearCallCount data, _) =>
+                                    data.status,
+                                dataLabelMapper: (LinearCallCount data, _) =>
+                                    data.statusName,
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true))
+                          ]),
+                      SfCircularChart(
+                          series: <PieSeries<LinearCallCount, String>>[
+                            PieSeries<LinearCallCount, String>(
+                                explode: true,
+                                explodeIndex: 0,
+                                // Bind data source
+                                dataSource:
+                                    _createMonthSampleData(snapshot.data!),
                                 xValueMapper: (LinearCallCount data, _) =>
                                     data.count.toString(),
                                 yValueMapper: (LinearCallCount data, _) =>

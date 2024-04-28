@@ -164,8 +164,9 @@ class _BodyState extends State<Body> {
                               MaterialPageRoute(builder: (context) {
                             return UserRatingGroupScreen(
                               name: snapshot.data![index].name,
-                              id: UserLoginDetail.userName,
+                              id: snapshot.data![index].id,
                               managerPermit: managerPermit,
+                              internal: snapshot.data![index].age.toString(),
                             );
                           }));
                         },
@@ -175,7 +176,7 @@ class _BodyState extends State<Body> {
 
                         titleColor: Colors.black,
                         profileImage: "https://api.multiavatar.com/" +
-                            snapshot.data![index].profilePhoto,
+                            snapshot.data![index].id,
                       );
                     },
                   ),

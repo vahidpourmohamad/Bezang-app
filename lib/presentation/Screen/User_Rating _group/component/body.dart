@@ -27,12 +27,14 @@ class Body extends StatefulWidget {
   final bool managerPermit;
   final String id;
   final String name;
+  final String internal;
 
   const Body(
       {Key? key,
       required this.managerPermit,
       required this.id,
-      required this.name})
+      required this.name,
+      required this.internal})
       : super(key: key);
 
   @override
@@ -47,6 +49,9 @@ class _BodyState extends State<Body> {
     // UserDataModel temp;
     // String t;
     UserRankDataModel ud = await UserRankDataLogic.readUserReport(widget.id);
+    print(widget.id);
+
+    print("test");
     //UserRankDataModel ud = UserRankDataModel.stringToModel(t);
     return ud;
   }
@@ -55,8 +60,8 @@ class _BodyState extends State<Body> {
       UserRankDataModel userRank) {
     final data = [
       new LinearCallCount(1, int.parse(userRank.statusMonth1), "موفق"),
-      new LinearCallCount(2, int.parse(userRank.statusMonth2), "کنسل"),
       new LinearCallCount(3, int.parse(userRank.statusMonth3), "در حال پیگیری"),
+      new LinearCallCount(2, int.parse(userRank.statusMonth2), "کنسل"),
     ];
 
     return data;
@@ -64,15 +69,15 @@ class _BodyState extends State<Body> {
 
   static List<LinearCallCount> _createSampleData(UserRankDataModel userRank) {
     final data = [
+      new LinearCallCount(3, int.parse(userRank.statusDay3), "در حال پیگیری"),
       new LinearCallCount(1, int.parse(userRank.statusDay1), "موفق"),
       new LinearCallCount(2, int.parse(userRank.statusDay2), "کنسل"),
-      new LinearCallCount(3, int.parse(userRank.statusDay3), "در حال پیگیری"),
       new LinearCallCount(4, int.parse(userRank.statusDay4), "محتوا"),
       new LinearCallCount(5, int.parse(userRank.statusDay5), "جواب نداد"),
       new LinearCallCount(6, int.parse(userRank.statusDay6), "ارسال نمونه"),
       new LinearCallCount(7, int.parse(userRank.statusDay7), "جلسه"),
       new LinearCallCount(8, int.parse(userRank.statusDay8), "اانتقال"),
-      new LinearCallCount(9, int.parse(userRank.statusDay9), "دیگر"),
+      new LinearCallCount(9, int.parse(userRank.statusDay8), "دیگر"),
     ];
 
     return data;
@@ -349,8 +354,7 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return InProgressCallScreen(
-                                name: UserLoginDetail.userName,
-                              );
+                                  name: widget.name, id: widget.id);
                             }));
                           } else {}
 //
@@ -364,8 +368,9 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return CDRStatusUserScreen(
-                                name: UserLoginDetail.userName,
+                                name: widget.name,
                                 reportDay: DateTime.now(),
+                                internal: widget.internal,
                               );
                             }));
                           } else {}
@@ -379,9 +384,9 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return TodayActionsListScreen(
-                                name: UserLoginDetail.userName,
-                                ReportDay: DateTime.now(),
-                              );
+                                  name: widget.name,
+                                  ReportDay: DateTime.now(),
+                                  id: widget.id);
                             }));
                           } else {}
                         },
@@ -402,6 +407,24 @@ class _BodyState extends State<Body> {
                                 dataLabelSettings:
                                     DataLabelSettings(isVisible: true))
                           ]),
+                      SfCircularChart(
+                          series: <PieSeries<LinearCallCount, String>>[
+                            PieSeries<LinearCallCount, String>(
+                                explode: true,
+                                explodeIndex: 0,
+                                // Bind data source
+                                dataSource:
+                                    _createMonthSampleData(snapshot.data!),
+                                xValueMapper: (LinearCallCount data, _) =>
+                                    data.count.toString(),
+                                yValueMapper: (LinearCallCount data, _) =>
+                                    data.status,
+                                dataLabelMapper: (LinearCallCount data, _) =>
+                                    data.statusName,
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true))
+                          ]),
+//
 //
                     ]))));
           } else {

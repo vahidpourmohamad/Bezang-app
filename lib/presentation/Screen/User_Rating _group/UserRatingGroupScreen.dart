@@ -7,11 +7,13 @@ class UserRatingGroupScreen extends StatelessWidget {
   final bool managerPermit;
   final String id;
   final String name;
+  final String internal;
   const UserRatingGroupScreen(
       {Key? key,
       required this.managerPermit,
       required this.id,
-      required this.name})
+      required this.name,
+      required this.internal})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class UserRatingGroupScreen extends StatelessWidget {
         managerPermit: managerPermit,
         id: id,
         name: name,
+        internal: internal,
       ),
     );
   }

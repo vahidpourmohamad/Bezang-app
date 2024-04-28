@@ -1,13 +1,14 @@
 import 'package:bestbuy/Data/model/CustomerDataModel.dart';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'DataProviderConfig.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CustomerDataLogic {
   static insert(CustomerDataModel customer) async {
-    await Dio().post(nodeJsUrl+'/customerinsertone',
-        data: customer.mapToList());
+    await Dio()
+        .post(nodeJsUrl + '/customerinsertone', data: customer.mapToList());
   }
 
 //  static Future<List<Map<String, dynamic>>> readAll() async {
@@ -46,8 +47,9 @@ class CustomerDataLogic {
     } else {
       if (userCreated == true) {
         Dio().options.contentType = Headers.jsonContentType;
-        var response = await Dio().post(nodeJsUrl + '/findcustomerbymobilebybank',
-            data: {'telephone': mobile,'bank':userId});
+        var response = await Dio().post(
+            nodeJsUrl + '/findcustomerbymobilebybank',
+            data: {'telephone': mobile, 'bank': userId});
         print(response.data.runtimeType);
         CustomerDataModel mdl = CustomerDataModel.fromList(response.data, 0);
         return (mdl);
@@ -85,9 +87,25 @@ class CustomerDataLogic {
     Dio().options.contentType = Headers.jsonContentType;
     var response = await Dio()
         .post(nodeJsUrl + '/findcustomerbymobile', data: {'telephone': mobile});
-    print(response.data.runtimeType);
-    CustomerDataModel mdl = CustomerDataModel.fromList(response.data, 0);
-    return (mdl);
+    print(response.data);
+    if (response.data != []) {
+      CustomerDataModel mdl = CustomerDataModel.fromList(response.data, 0);
+      return (mdl);
+    } else {
+      CustomerDataModel mdl = new CustomerDataModel(
+          id: "-1",
+          name: "-1",
+          company: "-1",
+          telephone: "-1",
+          comment: "-1",
+          workgroup: "-1",
+          bank: "-41",
+          creationUserList: [],
+          enable: false,
+          enableComment: "-1",
+          creationDate: DateTime.now());
+      return (mdl);
+    }
   }
 
   static Future<List<dynamic>> readOnecustomerByName(String name) async {

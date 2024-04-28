@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bestbuy/Data/dataprovider/CallDataLogic.dart';
+import 'package:bestbuy/Data/dataprovider/UserDataLogic.dart';
 import 'package:bestbuy/Data/model/CDRDataModel.dart';
 
 import 'package:bestbuy/config/ClsLoginCnf.dart';
@@ -8,17 +11,26 @@ import 'package:bestbuy/presentation/Screen/CDR_Status_User/CDRStatusUserScreen.
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/CDRHistoryStatusCard.dart';
 import 'package:bestbuy/presentation/widget/RoundedButton.dart';
+import 'package:dartssh2/dartssh2.dart';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'background.dart';
 
 class Body extends StatefulWidget {
   final DateTime reportDay;
   final String name;
+  final String internal;
 
-  const Body({Key? key, required this.reportDay, required this.name})
+  const Body(
+      {Key? key,
+      required this.reportDay,
+      required this.name,
+      required this.internal})
       : super(key: key);
 
   @override
@@ -28,6 +40,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  final player = AudioPlayer();
 
   void _onRefresh() async {
     // monitor network fetch
@@ -46,10 +59,17 @@ class _BodyState extends State<Body> {
   }
 
   @override
+  void dispose() async {
+    player.stop();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<CDRDataModel>>(
         future: CallDataLogic.readCDRByInternalByDay(
-            widget.reportDay, UserLoginDetail.internal),
+            widget.reportDay, widget.internal),
         builder: (context, AsyncSnapshot<List<CDRDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;
@@ -125,6 +145,7 @@ class _BodyState extends State<Body> {
                                             return CDRStatusUserScreen(
                                               name: UserLoginDetail.userName,
                                               reportDay: tomorrow,
+                                              internal: widget.internal,
                                             );
                                           }));
                                         },
@@ -136,7 +157,7 @@ class _BodyState extends State<Body> {
                                           press: () {
                                             final now = widget.reportDay;
 
-                                            final tomorrow = DateTime(now.year,
+                                            final yesterday = DateTime(now.year,
                                                 now.month, now.day - 1);
 
                                             Navigator.pushReplacement(context,
@@ -144,7 +165,8 @@ class _BodyState extends State<Body> {
                                                     builder: (context) {
                                               return CDRStatusUserScreen(
                                                 name: UserLoginDetail.userName,
-                                                reportDay: tomorrow,
+                                                reportDay: yesterday,
+                                                internal: widget.internal,
                                               );
                                             }));
                                           }),
@@ -182,7 +204,39 @@ class _BodyState extends State<Body> {
                           mobile: snapshot.data![index].destination
                               .toPersianDigit(),
                           suffixIconColor: Colors.transparent,
-                          press: () {},
+                          press: () async {
+                            // if(UserLoginDetail.APICode=="RumbaHolding")
+                            // {
+                            // }
+
+                            final client = SSHClient(
+                              await SSHSocket.connect('192.168.1.100', 22),
+                              username: 'root',
+                              onPasswordRequest: () => 'cmpwx5u6',
+                            );
+                            final sftp = await client.sftp();
+                            final file = await sftp.open(
+                                '/var/spool/asterisk/monitor/' +
+                                    snapshot.data![index].voice.substring(6));
+                            final content = await file.readBytes();
+                            File((await getTemporaryDirectory()).path +
+                                    "/" +
+                                    snapshot.data![index].voice.substring(6))
+                                .writeAsBytes(content);
+                            final test = await File(
+                                    (await getTemporaryDirectory()).path +
+                                        "/" +
+                                        snapshot.data![index].voice
+                                            .substring(6))
+                                .exists();
+                            if (test == true) {
+                              await player.play(DeviceFileSource(
+                                  (await getTemporaryDirectory()).path +
+                                      "/" +
+                                      snapshot.data![index].voice
+                                          .substring(6)));
+                            }
+                          },
                           backgroundColor: Colors.white,
                           descriptionColor: Colors.black,
                           titleColor: Colors.black);
