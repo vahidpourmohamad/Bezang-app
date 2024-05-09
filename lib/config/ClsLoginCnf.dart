@@ -10,4 +10,5 @@ class UserLoginDetail {
   static bool paymentStatus = false;
   static String internal = "";
   static String APICode = "";
+  static bool superAdmin = true;
 }

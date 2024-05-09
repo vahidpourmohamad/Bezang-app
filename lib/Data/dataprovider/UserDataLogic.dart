@@ -35,6 +35,14 @@ class UserDataLogic {
     return (response.data);
   }
 
+  static Future<List<dynamic>> readUsersGroupByApiCode(String ApiCode) async {
+    Dio().options.contentType = Headers.jsonContentType;
+    var response =
+        await Dio().post(nodeJsUrl + '/readusersbyapi', data: {'api': ApiCode});
+    print(response.data.runtimeType);
+    return (response.data);
+  }
+
   static Future<void> removeUserFromGroup(String Id) async {
     Dio().options.contentType = Headers.jsonContentType;
     var response = await Dio()
@@ -51,6 +59,9 @@ class UserDataLogic {
     List<dynamic> usersInGroup = [];
     if (user.mangerId != "" && user.mangerId != "0") {
       usersInGroup = await readUsersGroupByManagerId(user.mangerId);
+    }
+    if (user.enableComment == "SuperAdmin") {
+      usersInGroup = await readUsersGroupByApiCode(user.comment.toString());
     }
     print(usersInGroup);
     List<UserDataModel> userList = [];

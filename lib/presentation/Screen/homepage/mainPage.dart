@@ -150,7 +150,12 @@ class _MainPageState extends State<MainPage> {
     UserDataModel Ut =
         await UserDataLogic.readOneUserById(UserLoginDetail.userId);
     UserLoginDetail.internal = Ut.age.toString();
-
+    UserLoginDetail.APICode = Ut.comment;
+    if (Ut.enableComment == "SuperAdmin") {
+      UserLoginDetail.superAdmin = true;
+    } else {
+      UserLoginDetail.superAdmin = false;
+    }
     print(response.data.runtimeType);
     print(response.data);
     print(UserLoginDetail.version);

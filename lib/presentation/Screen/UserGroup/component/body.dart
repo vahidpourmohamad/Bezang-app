@@ -160,6 +160,9 @@ class _BodyState extends State<Body> {
                               UserLoginDetail.userId) {
                             managerPermit = true;
                           }
+                          if (UserLoginDetail.superAdmin) {
+                            managerPermit = true;
+                          }
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return UserRatingGroupScreen(

@@ -205,36 +205,36 @@ class _BodyState extends State<Body> {
                               .toPersianDigit(),
                           suffixIconColor: Colors.transparent,
                           press: () async {
-                            // if(UserLoginDetail.APICode=="RumbaHolding")
-                            // {
-                            // }
-
-                            final client = SSHClient(
-                              await SSHSocket.connect('192.168.1.100', 22),
-                              username: 'root',
-                              onPasswordRequest: () => 'cmpwx5u6',
-                            );
-                            final sftp = await client.sftp();
-                            final file = await sftp.open(
-                                '/var/spool/asterisk/monitor/' +
-                                    snapshot.data![index].voice.substring(6));
-                            final content = await file.readBytes();
-                            File((await getTemporaryDirectory()).path +
-                                    "/" +
-                                    snapshot.data![index].voice.substring(6))
-                                .writeAsBytes(content);
-                            final test = await File(
-                                    (await getTemporaryDirectory()).path +
-                                        "/" +
-                                        snapshot.data![index].voice
-                                            .substring(6))
-                                .exists();
-                            if (test == true) {
-                              await player.play(DeviceFileSource(
-                                  (await getTemporaryDirectory()).path +
+                            if (UserLoginDetail.APICode == "RumbaHolding") {
+                              final client = SSHClient(
+                                await SSHSocket.connect('192.168.1.100', 22),
+                                username: 'root',
+                                onPasswordRequest: () => 'cmpwx5u6',
+                              );
+                              final sftp = await client.sftp();
+                              final file = await sftp.open(
+                                  '/var/spool/asterisk/monitor/' +
+                                      snapshot.data![index].voice.substring(6));
+                              final content = await file.readBytes();
+                              File((await getTemporaryDirectory()).path +
                                       "/" +
-                                      snapshot.data![index].voice
-                                          .substring(6)));
+                                      snapshot.data![index].voice.substring(6))
+                                  .writeAsBytes(content);
+                              final test = await File(
+                                      (await getTemporaryDirectory()).path +
+                                          "/" +
+                                          snapshot.data![index].voice
+                                              .substring(6))
+                                  .exists();
+                              if (test == true) {
+                                try {
+                                  await player.play(DeviceFileSource(
+                                      (await getTemporaryDirectory()).path +
+                                          "/" +
+                                          snapshot.data![index].voice
+                                              .substring(6)));
+                                } catch (e) {}
+                              }
                             }
                           },
                           backgroundColor: Colors.white,
