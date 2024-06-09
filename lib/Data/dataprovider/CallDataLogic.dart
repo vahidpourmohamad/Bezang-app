@@ -33,6 +33,7 @@ class CallDataLogic {
       String _mobile, String id) async {
     Dio().options.contentType = Headers.jsonContentType;
     print(_mobile);
+    print("test");
     var response = await Dio().post(nodeJsUrl + '/findcdrbydestination',
         data: {'destination': _mobile});
 

@@ -7,8 +7,15 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 
 class CustomerDataLogic {
   static insert(CustomerDataModel customer) async {
-    await Dio()
-        .post(nodeJsUrl + '/customerinsertone', data: customer.mapToList());
+    if (customer.name == "") {
+      customer.name = customer.company;
+    }
+    if (customer.name == "" && customer.company == "") {
+      return;
+    } else {
+      await Dio()
+          .post(nodeJsUrl + '/customerinsertone', data: customer.mapToList());
+    }
   }
 
 //  static Future<List<Map<String, dynamic>>> readAll() async {

@@ -21,8 +21,13 @@ import 'background.dart';
 class Body extends StatefulWidget {
   final String mobile;
   final bool userCreated;
+  final String userId;
 
-  const Body({Key? key, required this.mobile, required this.userCreated})
+  const Body(
+      {Key? key,
+      required this.mobile,
+      required this.userCreated,
+      required this.userId})
       : super(key: key);
 
   @override
@@ -38,6 +43,7 @@ class _BodyState extends State<Body> {
   bool pastTomorrow = false;
   bool twoDays = false;
   bool calender = false;
+  bool canSubmit = true;
 
   String inProgressDate = DateTime.now()
       .add(Duration(days: 5))
@@ -134,6 +140,14 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.userCreated);
+    print(widget.userId);
+    print(UserLoginDetail.userId);
+    if (widget.userId == UserLoginDetail.userId) {
+      canSubmit = true;
+    } else {
+      canSubmit = false;
+    }
     print(DateTime.now().toString().substring(0, 19));
     print(DateTime.now()
         .add(Duration(days: 5))
@@ -346,7 +360,8 @@ class _BodyState extends State<Body> {
                                       MaterialPageRoute(builder: (context) {
                                     return CustomerCallStatusListScreen(
                                         mobile: snapshot.data!.telephone,
-                                        name: snapshot.data!.name);
+                                        name: snapshot.data!.name,
+                                        userId: widget.userId);
                                   }));
                                 }, // _callNumber("09151101602"),
                                 size: MediaQuery.of(context).size * 0.8))),
@@ -366,6 +381,7 @@ class _BodyState extends State<Body> {
                                 press: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
+                                    print(snapshot.data!.telephone);
                                     return CDRStatusListScreen(
                                         mobile: snapshot.data!.telephone,
                                         name: snapshot.data!.name);
@@ -820,38 +836,39 @@ class _BodyState extends State<Body> {
                               controller: textDescriptionController,
                             ))),
                     SizedBox(height: size.height * 0.01),
-                    RoundedButton(
-                        text: "ثبت تماس",
-                        press: () async {
-                          Gregorian inProgressGregorian = Gregorian.fromJalali(
-                              Jalali(
-                                  int.parse(inProgressDate
-                                      .toEnglishDigit()
-                                      .split("/")[0]),
-                                  int.parse(inProgressDate
-                                      .toEnglishDigit()
-                                      .split("/")[1]),
-                                  int.parse(inProgressDate
-                                      .toEnglishDigit()
-                                      .split("/")[2])));
-                          CallDataModel cm = CallDataModel(
-                              id: "0",
-                              userId: UserLoginDetail.userId,
-                              customerId: snapshot.data!.id,
-                              setDateTime: inProgressGregorian.toDateTime(),
-                              creationDateTime: DateTime.now(),
-                              status: callResultStatus.toString(),
-                              doDateTime: DateTime.utc(1989),
-                              enable: 1,
-                              comment: textDescriptionController.text,
-                              userName: UserLoginDetail.userName,
-                              customerMobile: snapshot.data!.telephone,
-                              customerName: snapshot.data!.name,
-                              hashTags: textHashTagsController.text);
-                          print(snapshot.data!.name);
-                          CallDataLogic.insert(cm);
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/', (Route<dynamic> route) => false);
+                    canSubmit
+                        ? RoundedButton(
+                            text: "ثبت تماس",
+                            press: () async {
+                              Gregorian inProgressGregorian =
+                                  Gregorian.fromJalali(Jalali(
+                                      int.parse(inProgressDate
+                                          .toEnglishDigit()
+                                          .split("/")[0]),
+                                      int.parse(inProgressDate
+                                          .toEnglishDigit()
+                                          .split("/")[1]),
+                                      int.parse(inProgressDate
+                                          .toEnglishDigit()
+                                          .split("/")[2])));
+                              CallDataModel cm = CallDataModel(
+                                  id: "0",
+                                  userId: UserLoginDetail.userId,
+                                  customerId: snapshot.data!.id,
+                                  setDateTime: inProgressGregorian.toDateTime(),
+                                  creationDateTime: DateTime.now(),
+                                  status: callResultStatus.toString(),
+                                  doDateTime: DateTime.utc(1989),
+                                  enable: 1,
+                                  comment: textDescriptionController.text,
+                                  userName: UserLoginDetail.userName,
+                                  customerMobile: snapshot.data!.telephone,
+                                  customerName: snapshot.data!.name,
+                                  hashTags: textHashTagsController.text);
+                              print(snapshot.data!.name);
+                              CallDataLogic.insert(cm);
+                              Navigator.pushNamedAndRemoveUntil(context, '/',
+                                  (Route<dynamic> route) => false);
 //                          Navigator.pushReplacement(
 //                            context,
 //                            MaterialPageRoute(
@@ -860,7 +877,8 @@ class _BodyState extends State<Body> {
 //                              },
 //                            ),
 //                          );
-                        })
+                            })
+                        : SizedBox(height: size.height * 0.01),
                   ],
                 ),
               ),

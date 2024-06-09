@@ -91,6 +91,11 @@ class _BodyState extends State<Body> {
         future: loadingData(),
         builder: (context, AsyncSnapshot<UserRankDataModel> snapshot) {
           if (snapshot.hasData) {
+            String Avg = snapshot.data!.averageSec.toPersianDigit();
+            if (Avg == "NaN") {
+              Avg = "0";
+            }
+            Avg = Avg.split(".")[0];
             //Size size = MediaQuery.of(context).size;
             return Background(
                 child: Directionality(
@@ -255,9 +260,7 @@ class _BodyState extends State<Body> {
                                                         fontSize: 12,
                                                         fontFamily:
                                                             'iransans')),
-                                                Text(
-                                                    snapshot.data!.averageSec
-                                                        .toPersianDigit(),
+                                                Text(Avg.toPersianDigit(),
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,

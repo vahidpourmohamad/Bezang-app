@@ -19,11 +19,11 @@ if (localPropertiesFile.exists()) {
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-    flutterVersionCode = '14'
+    flutterVersionCode = '17'
 
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
-    flutterVersionName = '1.0.6'
+    flutterVersionName = '1.0.9'
 
 
 android {
@@ -51,8 +51,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 14
-        versionName "1.0.6"
+        versionCode 17
+        versionName "1.0.9"
         multiDexEnabled true
     }
  signingConfigs {

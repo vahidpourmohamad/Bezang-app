@@ -14,13 +14,14 @@ class Body extends StatelessWidget {
               child: Column(children: [
                 Align(
                   alignment: Alignment.center,
-                  child:Image.asset(
+                  child: Image.asset(
                     "assets/images/logoNormalAzhang.png",
                     width: MediaQuery.of(context).size.width * 0.8,
                   ),
-                  ),
-                SizedBox( width: 200.0,
-                    height: MediaQuery.of(context).size.width*0.15),
+                ),
+                SizedBox(
+                    width: 200.0,
+                    height: MediaQuery.of(context).size.width * 0.15),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -32,17 +33,17 @@ class Body extends StatelessWidget {
                         fontFamily: 'iransans'),
                   ),
                 ),
-                SizedBox( width: 200.0,
-                  height: MediaQuery.of(context).size.width*0.15),
+                SizedBox(
+                    width: 200.0,
+                    height: MediaQuery.of(context).size.width * 0.15),
                 Text(
-                 "گروه مشاوره بازاریابی آژنگ تولید کننده و صاحب امتیاز اپلیکیشن بزنگ در سال 1395 تاسیس و تا به امروز به بیش از 100 مجموعه  اقتصادی مشاوره تخصصی در زمینه فروش ارائه کرده است . حوزه فعالیت این گروه بیشتر بر آموزش تمرکز دارد . این گروه به عنوان گروهی پیشرو از مرکز بازاریابی بین الملل پردیس ثبت شده است . اطلاعات تماس 05135018528-09151101602 آدرس: مشهد- برج کاسپین مد واحد 248",
+                  "گروه مشاوره بازاریابی آژنگ تولید کننده و صاحب امتیاز اپلیکیشن بزنگ در سال 1395 تاسیس و تا به امروز به بیش از 100 مجموعه  اقتصادی مشاوره تخصصی در زمینه فروش ارائه کرده است . حوزه فعالیت این گروه بیشتر بر آموزش تمرکز دارد . این گروه به عنوان گروهی پیشرو از مرکز بازاریابی بین الملل پردیس ثبت شده است .",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 14,
                       fontFamily: 'iransans'),
                 ),
-
               ]),
             ))));
   }

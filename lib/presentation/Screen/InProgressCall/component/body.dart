@@ -1,4 +1,5 @@
 import 'package:bestbuy/Data/dataprovider/CallDataLogic.dart';
+import 'package:bestbuy/Data/dataprovider/CustomerDataLogic.dart';
 import 'package:bestbuy/Data/model/CallDataModel.dart';
 import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/config/setting.dart';
@@ -183,6 +184,9 @@ class _BodyState extends State<Body> {
                           }
                           break;
                       }
+                      if (snapshot.data![index].customerName == "") {
+                        snapshot.data![index].customerName = "بدون نام";
+                      }
                       return CustomerHistoryStatusCard(
                           comment: snapshot.data![index].comment,
                           prefixBadge: cl,
@@ -199,8 +203,10 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return CustomerCallScreen(
-                                  mobile: snapshot.data![index].customerMobile,
-                                  userCreated: false);
+                                mobile: snapshot.data![index].customerMobile,
+                                userCreated: false,
+                                userId: widget.id,
+                              );
                             }));
                           },
                           backgroundColor: Colors.white,

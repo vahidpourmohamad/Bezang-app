@@ -120,6 +120,12 @@ class Body extends StatelessWidget {
                     RoundedButton(
                       text: "ثبت مشتری جدید",
                       press: () async {
+                        if (textNameController.text == "" &&
+                            textBusinessController.text == "") {
+                          print("test");
+                          return;
+                        }
+
                         CustomerDataModel customer = CustomerDataModel(
                             id: "0",
                             name: textNameController.text,
@@ -133,6 +139,10 @@ class Body extends StatelessWidget {
                             workgroup: jobSelected,
                             comment: textDescriptionController.text,
                             enableComment: "Enable By Default");
+                        if (customer.name == "") {
+                          customer.name = customer.company;
+                        }
+
                         CustomerDataLogic.insert(customer);
                         // Navigator.pop(context);
                         Navigator.push(
@@ -140,8 +150,10 @@ class Body extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) {
                               return CustomerCallScreen(
-                                  mobile: textMobileController.text,
-                                  userCreated: true);
+                                mobile: textMobileController.text,
+                                userCreated: true,
+                                userId: UserLoginDetail.userId,
+                              );
                             },
                           ),
                         );

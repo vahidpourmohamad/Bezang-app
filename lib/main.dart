@@ -4,16 +4,10 @@ import 'package:bestbuy/config/ClsLoginCnf.dart';
 import 'package:bestbuy/presentation/Screen/homepage/mainPage.dart';
 import 'package:bestbuy/presentation/Screen/introduction/introduction_screen.dart';
 import 'package:bestbuy/presentation/Screen/welcome/welcome_screen.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:responsive_framework/responsive_framework.dart';
-
-//import 'package:responsive_framework/responsive_framework.dart';
-//import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'constant/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pushe_flutter/pushe.dart';
 
 void main() {
   runApp(MaterialApp(

@@ -145,7 +145,7 @@ class _MainPageState extends State<MainPage> {
 
   versionCheck(BuildContext context) async {
 //    Dio().options.contentType = Headers.jsonContentType;
-    var response = await Dio().get(nodeJsUrl + '/version');
+    //var response = await Dio().get(nodeJsUrl + '/version');
 
     UserDataModel Ut =
         await UserDataLogic.readOneUserById(UserLoginDetail.userId);
@@ -156,25 +156,25 @@ class _MainPageState extends State<MainPage> {
     } else {
       UserLoginDetail.superAdmin = false;
     }
-    print(response.data.runtimeType);
-    print(response.data);
-    print(UserLoginDetail.version);
-    if (response.data != UserLoginDetail.version) {
-      showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-              title: Text('لطفا برنامه خود را بروزرسانی کنید',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: 'iransans',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
-              content: RoundedButton(
-                  text: "خروج از برنامه",
-                  press: () {
-                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  })));
-    }
+    //print(response.data.runtimeType);
+    //print(response.data);
+    //print(UserLoginDetail.version);
+    // if (response.data != UserLoginDetail.version) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (_) => AlertDialog(
+    //           title: Text('لطفا برنامه خود را بروزرسانی کنید',
+    //               textAlign: TextAlign.center,
+    //               style: TextStyle(
+    //                   fontFamily: 'iransans',
+    //                   fontWeight: FontWeight.bold,
+    //                   color: Colors.black)),
+    //           content: RoundedButton(
+    //               text: "خروج از برنامه",
+    //               press: () {
+    //                 SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    //               })));
+    // }
 
     //  UserDataModel user=UserDataModel.fromList(response.data,0);
   }

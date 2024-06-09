@@ -8,7 +8,7 @@ import 'package:bestbuy/presentation/Screen/TodayActions/TodayActionsListScreen.
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/RoundedButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/widgets.dart';
 
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'background.dart';
@@ -79,6 +79,12 @@ class _BodyState extends State<Body> {
         future: loadingData(),
         builder: (context, AsyncSnapshot<UserRankDataModel> snapshot) {
           if (snapshot.hasData) {
+            String Avg = snapshot.data!.averageSec.toPersianDigit();
+            if (Avg == "NaN") {
+              Avg = "0";
+            }
+            Avg = Avg.split(".")[0];
+
             //Size size = MediaQuery.of(context).size;
             return Background(
                 child: Directionality(
@@ -243,9 +249,7 @@ class _BodyState extends State<Body> {
                                                         fontSize: 12,
                                                         fontFamily:
                                                             'iransans')),
-                                                Text(
-                                                    snapshot.data!.averageSec
-                                                        .toPersianDigit(),
+                                                Text(Avg.toPersianDigit(),
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,

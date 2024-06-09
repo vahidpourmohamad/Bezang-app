@@ -16,22 +16,22 @@ class CustomerHistoryStatusCard extends StatelessWidget {
   final VoidCallback press;
   final String comment;
 
-  const CustomerHistoryStatusCard({
-    Key? key,
-    required this.prefixBadge,
-    required this.suffixBadge,
-    required this.iconColor,
-    required this.title,
-    required this.description,
-    required this.backgroundColor,
-    required this.mobile,
-    required this.suffixIconColor,
-    required this.press,
-    required this.date,
-    required this.descriptionColor,
-    required this.titleColor,
-    required this.comment
-  }) : super(key: key);
+  const CustomerHistoryStatusCard(
+      {Key? key,
+      required this.prefixBadge,
+      required this.suffixBadge,
+      required this.iconColor,
+      required this.title,
+      required this.description,
+      required this.backgroundColor,
+      required this.mobile,
+      required this.suffixIconColor,
+      required this.press,
+      required this.date,
+      required this.descriptionColor,
+      required this.titleColor,
+      required this.comment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,80 +49,81 @@ class CustomerHistoryStatusCard extends StatelessWidget {
                 color: this.prefixBadge,
               ),
               Expanded(
-                flex: 1,
-                child: Container(
+                  flex: 1,
+                  child: Container(
                     margin: const EdgeInsets.only(
                         left: 10, top: 5, bottom: 5, right: 10),
-                    child:
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                this.date,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  color: this.titleColor,
-                                ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      this.date,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                        color: this.titleColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      this.mobile,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w100,
+                                          fontSize: 14.0,
+                                          color: this.descriptionColor),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Container(
-                              child: Text(
-                                this.mobile,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w100,
-                                    fontSize: 10.0,
-                                    color: this.descriptionColor),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                textDirection: TextDirection.rtl,
+                                children: <Widget>[
+                                  Container(
+                                    child: Text(
+                                      this.title,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                        color: this.titleColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      this.description,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w100,
+                                          fontSize: 10.0,
+                                          color: this.descriptionColor),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
+                            child: Text(
+                              comment.isEmpty
+                                  ? "توضیحاتی ثبت نکردید"
+                                  : this.comment,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12.0,
+                                color: this.titleColor,
                               ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          textDirection: TextDirection.rtl,
-                          children: <Widget>[
-                            Container(
-                              child: Text(
-                                this.title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  color: this.titleColor,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: Text(
-                                this.description,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w100,
-                                    fontSize: 10.0,
-                                    color: this.descriptionColor),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                        Container(
-                          child: Text(
-                            comment.isEmpty?"توضیحاتی ثبت نکردید":this.comment,
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12.0,
-                              color: this.titleColor,
                             ),
                           ),
-                        ),]),)
-              ),
+                        ]),
+                  )),
               Container(
                 width: 15.0,
                 height: 80.0,

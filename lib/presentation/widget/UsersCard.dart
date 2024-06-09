@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'avatarNetworkUnique.dart';
 
 class UsersCard extends StatelessWidget {
@@ -57,7 +56,9 @@ class UsersCard extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           child: Text(
-                            this.date,
+                            this.date.substring(0, 4) +
+                                "XXX" +
+                                this.date.substring(7),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15.0,

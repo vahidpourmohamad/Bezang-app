@@ -179,10 +179,13 @@ class _NewCall extends State<NewCall> {
                                                                     builder:
                                                                         (context) {
                                                                       return CustomerCallScreen(
-                                                                          mobile:
-                                                                              bankSelected,
-                                                                          userCreated:
-                                                                              false);
+                                                                        mobile:
+                                                                            bankSelected,
+                                                                        userCreated:
+                                                                            false,
+                                                                        userId:
+                                                                            UserLoginDetail.userId,
+                                                                      );
                                                                     },
                                                                   ),
                                                                 );
@@ -323,10 +326,13 @@ class _NewCall extends State<NewCall> {
                                                                   builder:
                                                                       (context) {
                                                                     return CustomerCallScreen(
-                                                                        mobile: UserLoginDetail
-                                                                            .userId,
-                                                                        userCreated:
-                                                                            false);
+                                                                      mobile: UserLoginDetail
+                                                                          .userId,
+                                                                      userCreated:
+                                                                          false,
+                                                                      userId: UserLoginDetail
+                                                                          .userId,
+                                                                    );
                                                                   },
                                                                 ),
                                                               );

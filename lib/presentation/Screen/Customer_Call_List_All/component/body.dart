@@ -452,8 +452,10 @@ class _BodyState extends State<Body> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return CustomerCallStatusListScreen(
-                              mobile: snapshot.data![index].customerMobile,
-                              name: snapshot.data![index].customerName);
+                            mobile: snapshot.data![index].customerMobile,
+                            name: snapshot.data![index].customerName,
+                            userId: UserLoginDetail.userId,
+                          );
                         }));
                       },
                       backgroundColor: Colors.white,

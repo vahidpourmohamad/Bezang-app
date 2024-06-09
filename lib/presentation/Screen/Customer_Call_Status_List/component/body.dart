@@ -14,8 +14,13 @@ import 'background.dart';
 class Body extends StatefulWidget {
   final String mobile;
   final String name;
+  final String userId;
 
-  const Body({Key? key, required this.mobile, required this.name})
+  const Body(
+      {Key? key,
+      required this.mobile,
+      required this.name,
+      required this.userId})
       : super(key: key);
 
   @override
@@ -46,7 +51,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<CallDataModel>>(
         future: CallDataLogic.readCustomerCallHistoryByUser(
-            UserLoginDetail.userId, widget.mobile),
+            widget.userId, widget.mobile),
         builder: (context, AsyncSnapshot<List<CallDataModel>> snapshot) {
           if (snapshot.hasData) {
             //Size size = MediaQuery.of(context).size;
@@ -77,7 +82,7 @@ class _BodyState extends State<Body> {
                             alignment: Alignment.bottomCenter,
                             child: Padding(
                                 padding: EdgeInsets.only(
-                                    top: Setting.mediaSize.height*0.07,
+                                    top: Setting.mediaSize.height * 0.07,
                                     bottom: 0,
                                     left: 10,
                                     right: 20),
@@ -184,7 +189,7 @@ class _BodyState extends State<Body> {
                           break;
                       }
                       return CustomerHistoryStatusCard(
-                        comment:snapshot.data![index].comment ,
+                          comment: snapshot.data![index].comment,
                           prefixBadge: cl,
                           suffixBadge: cl,
                           date: snapshot.data![index].setDateTime
@@ -199,7 +204,10 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return CustomerCallScreen(
-                                  mobile: snapshot.data![index].customerMobile,userCreated: false);
+                                mobile: snapshot.data![index].customerMobile,
+                                userCreated: false,
+                                userId: widget.userId,
+                              );
                             }));
                           },
                           backgroundColor: Colors.white,

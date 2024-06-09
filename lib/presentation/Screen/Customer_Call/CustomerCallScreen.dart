@@ -10,39 +10,49 @@ import 'component/body.dart';
 class CustomerCallScreen extends StatelessWidget {
   final String mobile;
   final bool userCreated;
+  final String userId;
 
-  const CustomerCallScreen({Key? key, required this.mobile,required this.userCreated}) : super(key: key);
+  const CustomerCallScreen(
+      {Key? key,
+      required this.mobile,
+      required this.userCreated,
+      required this.userId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<CustomerDataModel>(
             future: CustomerDataLogic.readOneCustomerByBankUserCall(
-                mobile, UserLoginDetail.userId,userCreated),
+                mobile, UserLoginDetail.userId, userCreated),
             builder: (context, AsyncSnapshot<CustomerDataModel> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.telephone == "-1") {
                   return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                    Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "متسفانه بانک خالی است",
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              fontFamily: 'iransans'),
-                        )),
-                    RoundedButton(
-                        text: "برگشت",
-                        press: () {
-                          Navigator.pop(context);
-                        })
-                  ]);
+                        Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "متسفانه بانک خالی است",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  fontFamily: 'iransans'),
+                            )),
+                        RoundedButton(
+                            text: "برگشت",
+                            press: () {
+                              Navigator.pop(context);
+                            })
+                      ]);
                 } else {
-                  return (Body(mobile: snapshot.data!.telephone,userCreated: userCreated,));
+                  return (Body(
+                    mobile: snapshot.data!.telephone,
+                    userCreated: userCreated,
+                    userId: userId,
+                  ));
                 }
               } else {
                 if (snapshot.hasError) {

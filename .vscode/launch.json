@@ -9,7 +9,7 @@
             "name": "bestbuy",
             "request": "launch",
             "type": "dart",
-           
+           "deviceId": "SM A217F"
         }
     ]
 }

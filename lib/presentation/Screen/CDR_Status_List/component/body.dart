@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bestbuy/Data/dataprovider/CallDataLogic.dart';
 import 'package:bestbuy/Data/model/CDRDataModel.dart';
 
@@ -6,6 +9,7 @@ import 'package:bestbuy/config/setting.dart';
 
 import 'package:bestbuy/presentation/themes/light_color.dart';
 import 'package:bestbuy/presentation/widget/CDRHistoryStatusCard.dart';
+import 'package:dartssh2/dartssh2.dart';
 import 'package:dio/dio.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +32,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-
+  final player = AudioPlayer();
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
@@ -142,13 +146,62 @@ class _BodyState extends State<Body> {
                           suffixIconColor: Colors.transparent,
                           press: () async {
                             print("cdr Touch");
-                            final dio = Dio();
-// var pathToSave= "/WHERE YOU WANTED TO BE"
-                            var response = await dio.download(
-                                "http://192.168.1.100/index.php?menu=monitoring&action=download&id=1714216409.3950&namefile=OUT405-20240427-154329-1714216409.3950.wav&rawmode=yes",
-                                (await getTemporaryDirectory()).path +
-                                    snapshot.data![index].voice);
-                            print(response);
+                            if (UserLoginDetail.APICode == "RumbaHolding") {
+                              final client = SSHClient(
+                                await SSHSocket.connect('185.58.240.176', 1989),
+                                username: 'root',
+                                onPasswordRequest: () => 'Cmpwx5u6',
+                              );
+                              String m = snapshot.data![index].callDate.month
+                                  .toString();
+                              if (snapshot.data![index].callDate.month < 10) {
+                                m = "0" + m;
+                              }
+                              String d =
+                                  snapshot.data![index].callDate.day.toString();
+                              if (snapshot.data![index].callDate.day < 10) {
+                                d = "0" + d;
+                              }
+                              print('/var/spool/asterisk/monitor/' +
+                                  snapshot.data![index].callDate.year
+                                      .toString() +
+                                  '/' +
+                                  m.toString() +
+                                  '/' +
+                                  d.toString() +
+                                  '/' +
+                                  snapshot.data![index].voice);
+
+                              final sftp = await client.sftp();
+                              final file = await sftp.open(
+                                  '/var/spool/asterisk/monitor/' +
+                                      snapshot.data![index].callDate.year
+                                          .toString() +
+                                      '/' +
+                                      m.toString().toString() +
+                                      '/' +
+                                      d.toString().toString() +
+                                      '/' +
+                                      snapshot.data![index].voice);
+                              final content = await file.readBytes();
+                              File((await getTemporaryDirectory()).path +
+                                      "/" +
+                                      snapshot.data![index].voice)
+                                  .writeAsBytes(content);
+                              final test = await File(
+                                      (await getTemporaryDirectory()).path +
+                                          "/" +
+                                          snapshot.data![index].voice)
+                                  .exists();
+                              if (test == true) {
+                                try {
+                                  await player.play(DeviceFileSource(
+                                      (await getTemporaryDirectory()).path +
+                                          "/" +
+                                          snapshot.data![index].voice));
+                                } catch (e) {}
+                              }
+                            }
                           },
                           backgroundColor: Colors.white,
                           descriptionColor: Colors.black,

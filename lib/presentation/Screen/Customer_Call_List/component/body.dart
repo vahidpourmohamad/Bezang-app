@@ -43,7 +43,7 @@ class _BodyState extends State<Body> {
             UserLoginDetail.userId, DateTime.now().toString()),
         builder: (context, AsyncSnapshot<List<CallDataModel>> snapshot) {
           if (snapshot.hasData) {
-           //Size size = MediaQuery.of(context).size;
+            //Size size = MediaQuery.of(context).size;
             return Background(
                 child: Column(children: [
               Container(
@@ -181,7 +181,10 @@ class _BodyState extends State<Body> {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return CustomerCallScreen(
-                                  mobile: snapshot.data![index].customerMobile,userCreated:  false);
+                                mobile: snapshot.data![index].customerMobile,
+                                userCreated: false,
+                                userId: UserLoginDetail.userId,
+                              );
                             }));
                           },
                           backgroundColor: Colors.white,
